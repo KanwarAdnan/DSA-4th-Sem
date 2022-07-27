@@ -27,10 +27,10 @@ public:
     LinkedList() : head(NULL)   {}
     LinkedList(Node* head)      { setHead(head); }
     bool isEmpty()              { return (head->getNext() == NULL); }
-    void setHead(Node* head)    { this->head = head; }
     Node* getHead()             { return head; }
     Node* getFirst()            { return head; }
     Node* getLast()             { return getNode(getLength()); }
+    void setHead(Node* head)    { this->head = head; }
 
     int getLength(){
         int count = 0;
