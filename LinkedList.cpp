@@ -54,7 +54,7 @@ public:
         cout << '\n';
     }
 
-    Node* getNode(int index = 0){
+    Node* getNodeById(int index = 0){
         Node* temp = head;
         if (!isEmpty() && (index <= getLength() ) ){
             for(int i = 0 ; i < (index - 1) ; i++){
@@ -77,13 +77,13 @@ public:
         temp->setNext(newNode);
     }
 
-    void removeFromFirst(){
+    void removeFirst(){
         Node* temp = head->getNext();
         delete head;
         head = temp;
     }
 
-    void removeFromLast(){
+    void removeLast(){
         int len = getLength();
         Node* newTail = getNode(len-1);
         Node* tail = getLast();
@@ -101,6 +101,6 @@ int main(){
     l1.insertAtBeginning(-2);
     l1.insertAtBeginning(-3);
     l1.print();
-    cout << l1.getNode(4)->getData() << endl;
+    cout << l1.getNodeById(4)->getData() << endl;
     return 0;
 } 
