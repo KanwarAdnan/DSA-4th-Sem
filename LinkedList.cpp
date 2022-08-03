@@ -29,7 +29,7 @@ public:
     bool isEmpty()              { return (head == NULL); }
     void setHead(Node* head)    { this->head = head; }
     Node* getFirst()            { return head; }
-    Node* getLast()             { return getNode(getLength()); }
+    Node* getLast()             { return getNodeById(getLength()); }
 
     int getLength(){
         int count = 0;
@@ -85,7 +85,7 @@ public:
 
     void removeLast(){
         int len = getLength();
-        Node* newTail = getNode(len-1);
+        Node* newTail = getNodeById(len-1);
         Node* tail = getLast();
         delete tail;
         newTail->setNext(NULL);
