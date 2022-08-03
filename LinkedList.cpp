@@ -28,7 +28,6 @@ public:
     LinkedList(Node* head)      { setHead(head); }
     bool isEmpty()              { return (head == NULL); }
     void setHead(Node* head)    { this->head = head; }
-    Node* getHead()             { return head; }
     Node* getFirst()            { return head; }
     Node* getLast()             { return getNode(getLength()); }
 
