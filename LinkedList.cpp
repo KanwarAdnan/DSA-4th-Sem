@@ -64,6 +64,17 @@ public:
         }
         return head;
     }
+    
+    Node* getNodeByValue(int value){
+        if (!isEmpty()){
+            Node* temp = head;
+            while(value != temp->getData()){
+                temp = temp->getNext();
+            }
+            return temp;
+        }
+        return head; // if value not in node return head bcz we don't want to crash our program
+    }
 
     void insertAtBeginning(int value){
         Node* temp = new Node(value);
@@ -101,6 +112,6 @@ int main(){
     l1.insertAtBeginning(-2);
     l1.insertAtBeginning(-3);
     l1.print();
-    cout << l1.getNodeById(4)->getData() << endl;
+    cout << l1.getNodeByValue(99)->getData() << endl;
     return 0;
 } 
