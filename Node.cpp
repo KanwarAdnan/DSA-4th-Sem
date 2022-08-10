@@ -4,238 +4,121 @@ using namespace std;
 class Node{
 private:
     int data;
-    Node * next;
+    Node* next;
 public:
     Node() : data(0), next(NULL) {}
 
-    Node(int data, Node * next = NULL){
+    Node(int data, Node* next = NULL){
         setData(data);
         setNext(next);
     }
     
     void setData(int data)      { this->data = data; }
-    void setNext(Node * next)   { this->next = next; }
+    void setNext(Node* next)    { this->next = next; }
     int getData()               { return this->data; }
-    Node * getNext()            { return this->next; }
+    Node* getNext()             { return this->next; }
 };
 
-class LinkedList{
-private:
-    Node * head;
-    int length;
-public:
-    LinkedList() : head(NULL),length(0)   {}
-    LinkedList(Node * head)       { setHead(head); }
-    bool isEmpty()                { return (head == NULL); }
-    void setHead(Node * head)     { this->head = head; }
-    Node * getFirst()             { return head; }
-    Node * getLast()              { return getID(length); }
-    int getLength()               { return length; }
-
-    /* Discarding it because we no longer need this because of better option
-    int getLength(){
-        int count = 0;
-        if (!isEmpty() ){
-            Node * temp = head;
-            while(temp != NULL){
-                temp = temp->getNext();
-                count++;
-            }
-        }
-        return count;
+int getNodeLength(Node* head){
+    int count = 0;
+    Node* temp = head;
+    while(temp != NULL){
+        temp = temp->getNext();
+        count++;
     }
-    */
+    return count;
+}
 
-    void print(){
-        if (!isEmpty()){
-            Node * temp = head;
-            while(temp != NULL){
-                cout << temp->getData() << "->";
-                temp = temp->getNext();
-            }
-        }
-        cout << "NULL\n";
+void printNodeElements(Node* head){
+    Node* temp = head;
+    while(temp != NULL){
+        cout << temp->getData() << ' ';
+        temp = temp->getNext();
     }
-    
-    Node * getID(int index = 1){
-        Node * temp = head;
-        if (!isEmpty() && (index <= length) ){
-            for(int i = 0 ; i < (index - 1) ; i++){
-                temp = temp->getNext();
-            }
-            return temp;
-        }
-        return NULL;
-    }
-    
-    void delID(int index){
-        if (!isEmpty() && index <= length && index>1){
-            Node * previous = head;
-            Node * next = head->getNext();
-            int i = 2;
-            while(i != index){
-                previous = previous->getNext();
-                next = next->getNext();
-                i++;
-            }
-            previous->setNext(next->getNext());
-            delete next;
-            length--;
-        }
-        else {
-            Node * newHead = head->getNext();
-            delete head;
-            head = newHead;
-            length--;
-        }
-    }
-    
-    void delValue(int value){
-        if (!isEmpty()){
-            Node * previous = head;
-            Node * current = head->getNext();
-            if (head->getData() != value){    
-                while (current->getNext() != NULL){
-                    if (current->getData() == value){
-                        Node * next = current->getNext();
-                        previous->setNext(next);
-                        delete current;
-                    }
-                    previous = previous->getNext();
-                    current = current->getNext();
-                    length--;
-                }
-            }
-            else {
-                Node * newHead = head->getNext();
-                delete head;
-                head = newHead;
-                length--;
-            }
-        }
-    }
-    
-    Node * getNode(int value){
-        if (!isEmpty()){
-            Node* temp = head;
-            while(value != temp->getData()){
-                temp = temp->getNext();
-            }
-            return temp;
-        }
-        return NULL;
-    }
+}
 
-    void insertAtBeginning(int value){
-        Node * temp = new Node(value);
-
-        if (!isEmpty()){
-            temp->setNext(head);
-            head = temp;
-        }
-        else {
-            head = temp;
-        }
-
-        length++;
-    }
-
-    void insertAtLast(int value){
-        Node * temp = new Node(value);
-
-        if (!isEmpty()){
-            Node * last = getLast();
-            last->setNext(temp);
-        }
-
-        else {
-            head = temp;
-        }
-
-        length++;
-    }
-
-    void removeFirst(){
-        if (!isEmpty()){
-            Node * temp = head->getNext();
-            delete head;
-            head = temp;
-            length--;
-        }
-    }
-
-    void removeLast(){
-        Node * previous = head;
-        Node * next = head->getNext();
-
-        if (head->getNext() != NULL){
-            while (next->getNext() != NULL){
-                next = next->getNext();
-                previous = previous->getNext();
-            }
-
-            delete next;
-            previous->setNext(NULL);
-
-        }
-
-        else {
-            delete head;
-            head = NULL;
-        }
-
-        length--;
-
-    }
-    
-    bool doesExist(int value){
-        Node * temp = head;
-        while (temp != NULL){
-            if (value == temp->getData()){
-                return true;
-            }
+Node* getNode(Node* head,int index = 0){
+    Node* temp = head;
+    if (index != 0){
+        for(int i = 0 ; i < (index - 1) ; i++){
             temp = temp->getNext();
         }
-        return false;
+        return temp;
     }
+    return head;
+}
 
-    void reverse(){
-        Node * previous = NULL;
-        Node * current = head;
-        Node * next = NULL;
-        while(current != NULL){
-            next = current->getNext();
-            current->setNext(previous);
-            previous = current;
-            current = next;
-        }
-        head = previous;
-    }
+Node* getFirstNode(Node * head){
+    return head;
+}
 
-    int getIndex(int value){
-        Node * temp  = head;
-        int i = 1;
-        while (temp != NULL){
-            if (temp->getData() == value){
-                return i;
-            }
-            temp = temp->getNext();
-            i++;
-        }
-        return -1;
-    }
+Node* getLastNode(Node* head){
+    return getNode(head,getNodeLength(head));
+}
 
-};
+void insertNode(Node* head,int value){
+    Node* newNode = new Node(value);
+    Node* temp = getLastNode(head);
+    temp->setNext(newNode);
+}
 
 int main(){
-    LinkedList l1;
-    int i = 1;
-    while(i<=10){
-        l1.insertAtLast(i);
-        i++;
+    Node* firstNode = NULL;
+    Node* lastNode = NULL;
+    Node* nthNode = NULL;
+    int length = 0;
+    int n = 20;
+
+    // Default (head)
+    Node* head = new Node(2);
+
+    // linker
+    Node* link = head;
+
+    // dynamically making Nodes and joining them
+    while(n--){
+        Node* temp = new Node(n);
+        link->setNext(temp);
+        link = link->getNext();
     }
-    l1.print();
-    l1.delID(10);
-    l1.print();
-    cout << "Index of 5 : " << l1.getIndex(5);
+
+    // Getting first,last and n'th node and the length
+ 
+    firstNode = getFirstNode(head);
+    lastNode = getLastNode(head);
+    nthNode = getNode(head,8);
+    length = getNodeLength(head);
+
+    // Displaying
+    
+    cout << "\nFirst Node : " << firstNode->getData();
+    cout << "\nLast  Node : " << lastNode->getData();
+    cout << "\nnth   Node : " << nthNode->getData();
+    cout << "\nNode Length   : " << length;
+    cout << "\nComplete Node : ";
+    printNodeElements(head);
+
+
+    // Bonus (Add new node)
+    insertNode(head,100);
+    
+    // New Node
+    lastNode = getLastNode(head);
+    
+    // Displaying New Node
+    cout << "\nNew Node : " << lastNode->getData();
+    cout << "\nNew Length : " << getNodeLength(head);
+
+
 }
+
+/*
+Output Section:
+First Node : 2
+Last  Node : 0
+nth   Node : 13
+Node Length   : 21
+Complete Node : 2 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 
+New Node : 100
+New Length : 22
+*/
