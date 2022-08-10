@@ -68,6 +68,23 @@ public:
         return NULL;
     }
     
+    void deleteValue(int value){
+        if (!isEmpty()){
+            Node * previous = head;
+            Node * current = head->getNext();
+    
+            while (current->getNext() != NULL){
+                if (current->getData() == value){
+                    Node * next = current->getNext();
+                    previous->setNext(next);
+                    delete current;
+                }
+                previous = previous->getNext();
+                current = current->getNext();
+            }
+        }
+    }
+    
     Node* getNodeByValue(int value){
         if (!isEmpty()){
             Node* temp = head;
@@ -153,14 +170,8 @@ int main(){
     }
     l1.insertAtBeginning(0);
     l1.print();
-    cout << "Length : " << l1.getLength() << endl;
-    cout << (i) << "th Node : " << l1.getNodeById(i)->getData() << endl;
+    l1.deleteValue(3);
+    l1.print();
 
+    
 }
-
-/*
-Output:
-    0->1->2->3->4->5->6->7->8->9->10->NULL
-    Length : 11
-    11th Node : 10
-*/
