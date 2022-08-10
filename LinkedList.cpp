@@ -22,15 +22,17 @@ public:
 class LinkedList{
 private:
     Node* head;
-    
+    int length;
 public:
-    LinkedList() : head(NULL)   {}
+    LinkedList() : head(NULL),length(0)   {}
     LinkedList(Node* head)      { setHead(head); }
     bool isEmpty()              { return (head == NULL); }
     void setHead(Node* head)    { this->head = head; }
     Node* getFirst()            { return head; }
-    Node* getLast()             { return getNodeById(getLength()); }
+    Node* getLast()             { return getNodeById(length); }
+    int getLength()             { return length; }
 
+    /* Discarding it because we no longer need this because of better option
     int getLength(){
         int count = 0;
         if (!isEmpty() ){
@@ -42,27 +44,28 @@ public:
         }
         return count;
     }
+    */
 
     void print(){
         if (!isEmpty()){
             Node* temp = head;
             while(temp != NULL){
-                cout << temp->getData() << ' ';
+                cout << temp->getData() << "->";
                 temp = temp->getNext();
             }
         }
-        cout << '\n';
+        cout << "NULL\n";
     }
 
-    Node* getNodeById(int index = 0){
+    Node* getNodeById(int index = 1){
         Node* temp = head;
-        if (!isEmpty() && (index <= getLength() ) ){
+        if (!isEmpty() && (index <= length) ){
             for(int i = 0 ; i < (index - 1) ; i++){
                 temp = temp->getNext();
             }
             return temp;
         }
-        return head;
+        return NULL;
     }
     
     Node* getNodeByValue(int value){
@@ -73,33 +76,69 @@ public:
             }
             return temp;
         }
-        return head; // if value not in node return head bcz we don't want to crash our program
+        return NULL;
     }
 
     void insertAtBeginning(int value){
         Node* temp = new Node(value);
-        temp->setNext(head);
-        head = temp;
+
+        if (!isEmpty()){
+            temp->setNext(head);
+            head = temp;
+        }
+        else {
+            head = temp;
+        }
+
+        length++;
     }
 
     void insertAtLast(int value){
-        Node* newNode = new Node(value);
-        Node* temp = getLast();
-        temp->setNext(newNode);
+        Node * temp = new Node(value);
+
+        if (!isEmpty()){
+            Node * last = getLast();
+            last->setNext(temp);
+        }
+
+        else {
+            head = temp;
+        }
+
+        length++;
     }
 
     void removeFirst(){
-        Node* temp = head->getNext();
-        delete head;
-        head = temp;
+        if (!isEmpty()){
+            Node* temp = head->getNext();
+            delete head;
+            head = temp;
+            length--;
+        }
     }
 
     void removeLast(){
-        int len = getLength();
-        Node* newTail = getNodeById(len-1);
-        Node* tail = getLast();
-        delete tail;
-        newTail->setNext(NULL);
+        Node * previous = head;
+        Node * next = head->getNext();
+
+        if (head->getNext() != NULL){
+            while (next->getNext() != NULL){
+                next = next->getNext();
+                previous = previous->getNext();
+            }
+
+            delete next;
+            previous->setNext(NULL);
+
+        }
+
+        else {
+            delete head;
+            head = NULL;
+        }
+
+        length--;
+
     }
 
 };
@@ -107,11 +146,21 @@ public:
 int main(){
     
     LinkedList l1;
+    int i = 1;
+    while(i<=10){
+        l1.insertAtLast(i);
+        i++;
+    }
     l1.insertAtBeginning(0);
-    l1.insertAtBeginning(-1);
-    l1.insertAtBeginning(-2);
-    l1.insertAtBeginning(-3);
     l1.print();
-    cout << l1.getNodeByValue(99)->getData() << endl;
-    return 0;
-} 
+    cout << "Length : " << l1.getLength() << endl;
+    cout << (i) << "th Node : " << l1.getNodeById(i)->getData() << endl;
+
+}
+
+/*
+Output:
+    0->1->2->3->4->5->6->7->8->9->10->NULL
+    Length : 11
+    11th Node : 10
+*/
