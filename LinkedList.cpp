@@ -4,39 +4,39 @@ using namespace std;
 class Node{
 private:
     int data;
-    Node* next;
+    Node * next;
 public:
     Node() : data(0), next(NULL) {}
 
-    Node(int data, Node* next = NULL){
+    Node(int data, Node * next = NULL){
         setData(data);
         setNext(next);
     }
     
     void setData(int data)      { this->data = data; }
-    void setNext(Node* next)    { this->next = next; }
+    void setNext(Node * next)   { this->next = next; }
     int getData()               { return this->data; }
-    Node* getNext()             { return this->next; }
+    Node * getNext()            { return this->next; }
 };
 
 class LinkedList{
 private:
-    Node* head;
+    Node * head;
     int length;
 public:
     LinkedList() : head(NULL),length(0)   {}
-    LinkedList(Node* head)      { setHead(head); }
-    bool isEmpty()              { return (head == NULL); }
-    void setHead(Node* head)    { this->head = head; }
-    Node* getFirst()            { return head; }
-    Node* getLast()             { return getNodeById(length); }
-    int getLength()             { return length; }
+    LinkedList(Node * head)       { setHead(head); }
+    bool isEmpty()                { return (head == NULL); }
+    void setHead(Node * head)     { this->head = head; }
+    Node * getFirst()             { return head; }
+    Node * getLast()              { return getID(length); }
+    int getLength()               { return length; }
 
     /* Discarding it because we no longer need this because of better option
     int getLength(){
         int count = 0;
         if (!isEmpty() ){
-            Node* temp = head;
+            Node * temp = head;
             while(temp != NULL){
                 temp = temp->getNext();
                 count++;
@@ -48,7 +48,7 @@ public:
 
     void print(){
         if (!isEmpty()){
-            Node* temp = head;
+            Node * temp = head;
             while(temp != NULL){
                 cout << temp->getData() << "->";
                 temp = temp->getNext();
@@ -57,8 +57,8 @@ public:
         cout << "NULL\n";
     }
 
-    Node* getNodeById(int index = 1){
-        Node* temp = head;
+    Node * getID(int index = 1){
+        Node * temp = head;
         if (!isEmpty() && (index <= length) ){
             for(int i = 0 ; i < (index - 1) ; i++){
                 temp = temp->getNext();
@@ -68,7 +68,7 @@ public:
         return NULL;
     }
     
-    void deleteValue(int value){
+    void delValue(int value){
         if (!isEmpty()){
             Node * previous = head;
             Node * current = head->getNext();
@@ -91,7 +91,7 @@ public:
         }
     }
     
-    Node* getNodeByValue(int value){
+    Node * getNode(int value){
         if (!isEmpty()){
             Node* temp = head;
             while(value != temp->getData()){
@@ -103,7 +103,7 @@ public:
     }
 
     void insertAtBeginning(int value){
-        Node* temp = new Node(value);
+        Node * temp = new Node(value);
 
         if (!isEmpty()){
             temp->setNext(head);
@@ -133,7 +133,7 @@ public:
 
     void removeFirst(){
         if (!isEmpty()){
-            Node* temp = head->getNext();
+            Node * temp = head->getNext();
             delete head;
             head = temp;
             length--;
@@ -191,7 +191,6 @@ public:
 };
 
 int main(){
-    
     LinkedList l1;
     int i = 1;
     while(i<=10){
@@ -202,6 +201,4 @@ int main(){
     l1.print();
     l1.reverse();
     l1.print();
-
-    
 }
