@@ -175,6 +175,19 @@ public:
         return false;
     }
 
+    void reverse(){
+        Node * previous = NULL;
+        Node * current = head;
+        Node * next = NULL;
+        while(current != NULL){
+            next = current->getNext();
+            current->setNext(previous);
+            previous = current;
+            current = next;
+        }
+        head = previous;
+    }
+
 };
 
 int main(){
@@ -187,9 +200,8 @@ int main(){
     }
     l1.insertAtBeginning(0);
     l1.print();
-    l1.deleteValue(0);
+    l1.reverse();
     l1.print();
-    cout << "doesExist : " << l1.doesExist(10);
 
     
 }
