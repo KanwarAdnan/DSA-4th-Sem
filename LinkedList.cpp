@@ -163,6 +163,17 @@ public:
         length--;
 
     }
+    
+    bool doesExist(int value){
+        Node * temp = head;
+        while (temp != NULL){
+            if (value == temp->getData()){
+                return true;
+            }
+            temp = temp->getNext();
+        }
+        return false;
+    }
 
 };
 
@@ -178,6 +189,7 @@ int main(){
     l1.print();
     l1.deleteValue(0);
     l1.print();
+    cout << "doesExist : " << l1.doesExist(10);
 
     
 }
