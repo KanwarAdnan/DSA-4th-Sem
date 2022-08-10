@@ -230,12 +230,18 @@ public:
 int main(){
     LinkedList l1;
     int i = 1;
+
     while(i<=10){
         l1.insertAtLast(i);
         i++;
-    }
+     }
+
     l1.print();
-    l1.delID(10);
+    l1.delID(5);
+    l1.delValue(6);
+    l1.insertAtBeginning(0);
+    l1.reverse();
     l1.print();
-    cout << "Index of 5 : " << l1.getIndex(5);
+
+    cout << "Index of 9 : " << l1.getIndex(9);
 }
