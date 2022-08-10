@@ -2,26 +2,24 @@
 
 class Stack{
     private:
-        LinkedList* list;
+        LinkedList list;
         int limit;
     public:
         Stack(){
-            list = new LinkedList;
             this->limit = 100;
         }
         Stack(int limit){
-            list = new LinkedList;
             this->limit = limit;
         }
-        bool isFull()       { return (list->getLength()==limit); }
-        bool isEmpty()      { return (list->isEmpty()); }
-        int top()           { return (list->getLast()->getData()); }
-        int getLength()     { return (list->getLength()); }
-        void print()        { list->print(); }
+        bool isFull()       { return (list.getLength()==limit); }
+        bool isEmpty()      { return (list.isEmpty()); }
+        int top()           { return (list.getLast()->getData()); }
+        int getLength()     { return (list.getLength()); }
+        void print()        { list.print(); }
 
         bool push(int value){
             if (!isFull()){
-                list->insertAtLast(value);
+                list.insertAtLast(value);
                 return true;
             }
             return false;
@@ -29,9 +27,9 @@ class Stack{
         int pop(){
             int value = 0;
             if (!isEmpty()){
-                Node* last = list->getLast();
-                Node* secondLast = list->getID((list->getLength()-1));
-                value = last->getData();
+                Node* last = list.getLast();
+                Node* secondLast = list.getID((list.getLength()-1));
+                value = last.getData();
                 secondLast->setNext(NULL);
                 delete last;
                 return value;
