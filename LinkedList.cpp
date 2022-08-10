@@ -72,15 +72,21 @@ public:
         if (!isEmpty()){
             Node * previous = head;
             Node * current = head->getNext();
-    
-            while (current->getNext() != NULL){
-                if (current->getData() == value){
-                    Node * next = current->getNext();
-                    previous->setNext(next);
-                    delete current;
+            if (head->getData() != value){    
+                while (current->getNext() != NULL){
+                    if (current->getData() == value){
+                        Node * next = current->getNext();
+                        previous->setNext(next);
+                        delete current;
+                    }
+                    previous = previous->getNext();
+                    current = current->getNext();
                 }
-                previous = previous->getNext();
-                current = current->getNext();
+            }
+            else {
+                Node * newHead = head->getNext();
+                delete head;
+                head = newHead;
             }
         }
     }
@@ -170,7 +176,7 @@ int main(){
     }
     l1.insertAtBeginning(0);
     l1.print();
-    l1.deleteValue(3);
+    l1.deleteValue(0);
     l1.print();
 
     
