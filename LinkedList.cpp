@@ -56,7 +56,7 @@ public:
         }
         cout << "NULL\n";
     }
-
+    
     Node * getID(int index = 1){
         Node * temp = head;
         if (!isEmpty() && (index <= length) ){
@@ -66,6 +66,28 @@ public:
             return temp;
         }
         return NULL;
+    }
+    
+    void delID(int index){
+        if (!isEmpty() && index <= length && index>1){
+            Node * previous = head;
+            Node * next = head->getNext();
+            int i = 2;
+            while(i != index){
+                previous = previous->getNext();
+                next = next->getNext();
+                i++;
+            }
+            previous->setNext(next->getNext());
+            delete next;
+            length--;
+        }
+        else {
+            Node * newHead = head->getNext();
+            delete head;
+            head = newHead;
+            length--;
+        }
     }
     
     void delValue(int value){
@@ -81,12 +103,14 @@ public:
                     }
                     previous = previous->getNext();
                     current = current->getNext();
+                    length--;
                 }
             }
             else {
                 Node * newHead = head->getNext();
                 delete head;
                 head = newHead;
+                length--;
             }
         }
     }
@@ -188,6 +212,19 @@ public:
         head = previous;
     }
 
+    int getIndex(int value){
+        Node * temp  = head;
+        int i = 1;
+        while (temp != NULL){
+            if (temp->getData() == value){
+                return i;
+            }
+            temp = temp->getNext();
+            i++;
+        }
+        return -1;
+    }
+
 };
 
 int main(){
@@ -197,8 +234,8 @@ int main(){
         l1.insertAtLast(i);
         i++;
     }
-    l1.insertAtBeginning(0);
     l1.print();
-    l1.reverse();
+    l1.delID(10);
     l1.print();
+    cout << "Index of 5 : " << l1.getIndex(5);
 }
