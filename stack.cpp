@@ -30,7 +30,7 @@ class Stack{
             int value = 0;
             if (!isEmpty()){
                 Node* last = list->getLast();
-                Node* secondLast = list->getNodeById((list->getLength()-1));
+                Node* secondLast = list->getID((list->getLength()-1));
                 value = last->getData();
                 secondLast->setNext(NULL);
                 delete last;
