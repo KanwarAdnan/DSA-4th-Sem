@@ -29,7 +29,7 @@ class Stack{
             if (!isEmpty()){
                 Node* last = list.getLast();
                 Node* secondLast = list.getID((list.getLength()-1));
-                value = last.getData();
+                value = last->getData();
                 secondLast->setNext(NULL);
                 delete last;
                 return value;
