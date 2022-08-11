@@ -1,8 +1,103 @@
-#include "linkedlist.h"
+/*
+    Queue using singly linked list variant
+*/
+#include <iostream>
+using namespace std;
+class Node{
+private:
+        int data;
+        Node * next;
+public:
+    Node() : next(NULL),data(0) {}
+
+    Node(int data, Node* next = NULL){
+        setData(data);
+        setNext(next);
+    }
+    
+    void setData(int data)      { this->data = data; }
+    void setNext(Node* next)    { this->next = next; }
+    int getData()               { return this->data; }
+    Node* getNext()             { return this->next; }
+};
+
+class LinkedList2{
+    private:
+        Node * head;
+        Node * last;
+    public:
+        LinkedList2(){
+            head = NULL;
+            last = NULL;
+        }
+        Node* getFirst(){
+            return head;
+        }
+        int getLength(){
+            int count = 0;
+            if (!isEmpty() ){
+                Node * temp = head;
+                while(temp != NULL){
+                    temp = temp->getNext();
+                    count++;
+                }
+            }
+            return count;
+        }
+
+    
+        void insertAtBeginning(int x){
+            Node * temp = new Node(x);
+            temp->setNext(head);
+            last = head;
+            head = temp;
+        }
+
+        void insertAtLast(int x){
+            Node * n = new Node(x);
+            if (!isEmpty()){
+                Node * temp = head;
+                while( temp->getNext() != NULL){
+                    temp = temp->getNext();
+                }
+                temp->setNext(n);
+                last = n;
+            }
+            else {
+                head = n;
+            }
+            }
+        void removeFirst(){
+            if (isEmpty()){
+                return;
+            }
+            else if (head->getNext() == NULL) {
+                delete head;
+                head = NULL;
+            }
+            else {
+                Node * temp = head->getNext();
+                delete head;
+                head = temp;
+            }
+        }
+
+        void print(){
+            if (!isEmpty()){
+                Node* temp = head;
+                while(temp != NULL){
+                    cout << temp->getData() << "->";
+                    temp = temp->getNext();
+                }
+            }
+            cout << "NULL";
+        }
+        bool isEmpty()              { return (head == NULL); }    
+};
 
 class Queue{
     private:
-        LinkedList list;
+        LinkedList2 list;
         int limit;
         int size;
     public:
@@ -35,5 +130,6 @@ int main(){
     q1.enqueue(4);
     q1.dequeue();
     q1.print();
+    cout << '\n';
     cout << "Peek : " << q1.peek() << endl;
 }
