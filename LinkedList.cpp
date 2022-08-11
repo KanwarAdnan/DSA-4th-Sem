@@ -246,6 +246,7 @@ public:
                 Node * temp = head->getNext();
                 delete head;
                 head = temp;
+                length--;
             }
             else {
                 Node * temp = head;
