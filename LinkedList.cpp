@@ -209,14 +209,8 @@ public:
 
     void deleteElementById(int id){
         if ( (!isEmpty()) && (isIndex(id)) ){
-            if ( (id == 1) && (length == 1) ){
-                delete head;
-                head = NULL;
-            }
-            else if ( (id == 1) && (length == 2) ){
-                Node * temp = head->getNext();
-                delete head;
-                head = temp;
+            if ( (id == 1) && (length <= 2) ){
+                removeFirst();
             }
             else {
                 Node * temp = head;
@@ -230,23 +224,15 @@ public:
                 Node * next = temp2->getNext();
                 temp->setNext(next);
                 delete temp2;
+                length--;
             }
-            length--;
         }
     }
 
     void deleteElementByValue(int value){
         if (!isEmpty()){
-            if (value == head->getData() && length == 1){
-                delete head;
-                head = NULL;
-                length--;
-            }
-            else if (value == head->getData() && length == 2){
-                Node * temp = head->getNext();
-                delete head;
-                head = temp;
-                length--;
+            if ( (head->getData() == value) && (length <= 2) ){
+                removeFirst();
             }
             else {
                 Node * temp = head;
@@ -264,9 +250,7 @@ public:
                 }
                 // If the last member is to delete
                 if (temp2->getData() == value){
-                    delete temp2;
-                    temp->setNext(NULL);
-                    length--;
+                    removeLast();
                 }
             }
         }
@@ -375,6 +359,7 @@ public:
         }
     }
 };
+
 
 int main(){
     LinkedList l1;
