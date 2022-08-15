@@ -321,7 +321,6 @@ public:
                 Node * temp = new Node(value);
                 Node * prevId = getNodeById(id-1);
                 Node * currentId = prevId->getNext();
-                Node * nextId = currentId->getNext();
                 prevId->setNext(temp);
                 temp->setNext(currentId);
                 length++;
