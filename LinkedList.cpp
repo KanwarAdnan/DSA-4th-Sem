@@ -42,18 +42,10 @@ public:
         setData(data);
         setNext(next);
     }
-    Node * getNext(){
-        return next;
-    }
-    int getData(){
-        return data;
-    }
-    void setNext(Node * next){
-        this->next = next;
-    }
-    void setData(int data){
-        this->data = data;
-    }
+    Node * getNext()            { return next; }
+    int getData()               { return data; }
+    void setNext(Node * next)   { this->next = next; }
+    void setData(int data)      { this->data = data; }
 };
 
 class LinkedList{
@@ -61,38 +53,15 @@ private:
     Node * head;
     int length;
 public:
-    LinkedList(){
-        length = 0;
-        head = NULL;
-    }
-    bool isEmpty(){
-        return (head == NULL);
-    }
-    bool isIndex(int index){
-        return ( (index <= length) && (index > 0) );
-    }
-
-    bool isValid(int index){
-        return ( (!isEmpty()) && (isIndex(index)) );
-    }
-    Node* getFirst(){
-        return head;
-    }
-    Node * getLast(){
-        return getNodeById(length);
-    }
-    
-    int getFirstElement(){
-        return getFirst()->getData();
-    }
-
-    int getLastElement(){
-        return getLast()->getData();
-    }
-    
-    int getLength(){
-        return length;
-    }
+    LinkedList() : length(0) , head(NULL) {}
+    bool isEmpty()              { return (head == NULL); }
+    bool isIndex(int index)     { return ( (index <= length) && (index > 0) ); }
+    bool isValid(int index)     { return ( (!isEmpty()) && (isIndex(index)) ); }
+    Node* getFirst()            { return head; }
+    Node * getLast()            { return getNodeById(length); }
+    int getFirstElement()       { return getFirst()->getData(); }
+    int getLastElement()        { return getLast()->getData(); }
+    int getLength()             { return length; }
 
     void insertAtBeginning(int value){
         Node * temp = new Node(value);
@@ -103,14 +72,12 @@ public:
 
     void insertAtLast(int value){
         Node * temp = new Node(value);
-        if (isEmpty()){
+        if (isEmpty())
             head = temp;
-        }
         else {
             Node * temp2 = head;
-            while (temp2->getNext() != NULL){
+            while (temp2->getNext() != NULL)
                 temp2 = temp2->getNext();
-            }
             temp2->setNext(temp);
         }
         length++;
@@ -137,9 +104,8 @@ public:
     }
     
     void removeFirst(){
-        if (isEmpty()){
+        if (isEmpty())
             return;
-        }
         else if (head->getNext() == NULL) {
             delete head;
             head = NULL;
@@ -153,9 +119,8 @@ public:
     }
 
     void removeLast(){
-        if (isEmpty()){
+        if (isEmpty())
             return;
-        }
         else if(head->getNext() == NULL){
             delete head;
             head = NULL;
@@ -198,9 +163,8 @@ public:
         if (!isEmpty()){
             Node * temp = head;
             while (temp != NULL){
-                if (value == temp->getData()){
+                if (value == temp->getData())
                     return temp;
-                }
                 temp = temp->getNext();
             }
         }
@@ -212,9 +176,8 @@ public:
             Node * temp = head;
             int count = 1;
             while (temp != NULL){
-                if (value == temp->getData()){
+                if (value == temp->getData())
                     return count;
-                }
                 count++;
                 temp = temp->getNext();
             }
@@ -224,9 +187,8 @@ public:
 
     void deleteElementById(int id){
         if ( (!isEmpty()) && (isIndex(id)) ){
-            if ( (id == 1) && (length <= 2) ){
+            if ( (id == 1) && (length <= 2) )
                 removeFirst();
-            }
             else {
                 Node * temp = head;
                 Node * temp2 = head->getNext();
@@ -246,9 +208,8 @@ public:
 
     void deleteElementByValue(int value){
         if (!isEmpty()){
-            if ( (head->getData() == value) && (length <= 2) ){
+            if ( (head->getData() == value) && (length <= 2) )
                 removeFirst();
-            }
             else {
                 Node * temp = head;
                 Node * temp2 = head->getNext();
@@ -274,9 +235,8 @@ public:
     bool doesExist(int value){
         Node * temp = head;
         while (temp != NULL){
-            if (value == temp->getData()){
+            if (value == temp->getData())
                 return true;
-            }
             temp = temp->getNext();
         }
         return false;
@@ -314,9 +274,8 @@ public:
 
     void insertAtId(int id,int value){
         if (!isEmpty() && isIndex(id) ){
-            if (id == 1){
+            if (id == 1)
                 insertAtBeginning(value);
-            }
             else {
                 Node * temp = new Node(value);
                 Node * prevId = getNodeById(id-1);
@@ -355,9 +314,8 @@ public:
     // Incomplete
     void swap(int id1, int id2){
         if (isIndex(id1) && isIndex(id2)){
-            if (id1 == id2){
+            if (id1 == id2)
                 return;
-            }
             else {
                 Node * prevId1 = getNodeById( id1 - 1 );
                 Node * prevId2 = getNodeById( id2 - 1 );
