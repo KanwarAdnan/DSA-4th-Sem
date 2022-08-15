@@ -21,6 +21,9 @@
         18) doesExist(int value)
         19) doesExistRet(int value , int * index)
         20) reverse()
+        21) printRev(Node * current)
+        22) print()
+        23) printWithIndex()
 */
 #include <iostream>
 using namespace std;
@@ -128,7 +131,7 @@ public:
         }
         cout << '\n';
     }
-
+    
     void removeFirst(){
         if (isEmpty()){
             return;
@@ -358,6 +361,14 @@ public:
             }
         }
     }
+
+    void printRev(Node * current){
+        if (current == NULL)
+            return;
+        printRev(current->getNext());
+        cout << "<-" << current->getData();
+    }
+    
 };
 
 
@@ -369,14 +380,12 @@ int main(){
     l1.insertAtLast(4);
     l1.insertAtLast(5);
     l1.print();
-    l1.swap(2,4);
-    cout << "Swapped List ->\n";
-    l1.print();
+    Node * temp = l1.getFirst();
+    cout << "NULL";
+    l1.printRev(temp);
 }
-
 /*
 Output: 
     1->2->3->4->5->NULL
-    Swapped List ->
-    1->4->3->2->5->NULL
+    NULL<-5<-4<-3<-2<-1
 */
