@@ -174,15 +174,9 @@ public:
     }
 
     int getElementById(int id){
-        if ((!isEmpty()) && (isIndex(id))){
-            Node * temp = head;
-            int count = 1;
-            while (count != id){
-                temp = temp->getNext();
-                count++;
-            }
+        Node * temp = getNodeById(id);
+        if (temp != NULL)
             return temp->getData();
-        }
         return -9999;
     }
 
