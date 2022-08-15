@@ -21,9 +21,12 @@
         18) doesExist(int value)
         19) doesExistRet(int value , int * index)
         20) reverse()
-        21) printRev(Node * current)
-        22) print()
-        23) printWithIndex()
+        21) print()
+        22) printWithIndex()
+        23) printRev(Node * current)
+        24) getFirstElement()
+        25) getLastElement()
+        26) getNodeById(int id)
 */
 #include <iostream>
 using namespace std;
@@ -76,21 +79,25 @@ public:
         return head;
     }
     Node * getLast(){
-        return getElementById(length);
+        return getNodeById(length);
     }
+    
+    int getFirstElement(){
+        return getFirst()->getData();
+    }
+
+    int getLastElement(){
+        return getLast()->getData();
+    }
+    
     int getLength(){
         return length;
     }
 
     void insertAtBeginning(int value){
         Node * temp = new Node(value);
-        if (isEmpty()){
-            head = temp;
-        }
-        else {
-            temp->setNext(head);
-            head = temp;
-        }
+        temp->setNext(head);
+        head = temp;
         length++;
     }
 
@@ -98,9 +105,6 @@ public:
         Node * temp = new Node(value);
         if (isEmpty()){
             head = temp;
-        }
-        else if (head->getNext() == NULL){
-            head->setNext(temp);
         }
         else {
             Node * temp2 = head;
@@ -169,7 +173,20 @@ public:
         length--;
     }
 
-    Node * getElementById(int id){
+    int getElementById(int id){
+        if ((!isEmpty()) && (isIndex(id))){
+            Node * temp = head;
+            int count = 1;
+            while (count != id){
+                temp = temp->getNext();
+                count++;
+            }
+            return temp->getData();
+        }
+        return -9999;
+    }
+
+    Node * getNodeById(int id){
         if ((!isEmpty()) && (isIndex(id))){
             Node * temp = head;
             int count = 1;
@@ -182,7 +199,8 @@ public:
         return NULL;
     }
 
-    Node * getElementByValue(int value){
+
+    Node * getNodeByValue(int value){
         if (!isEmpty()){
             Node * temp = head;
             while (temp != NULL){
@@ -207,7 +225,7 @@ public:
                 temp = temp->getNext();
             }
         }
-        return -1;
+        return -9999;
     }
 
     void deleteElementById(int id){
@@ -307,7 +325,7 @@ public:
             }
             else {
                 Node * temp = new Node(value);
-                Node * prevId = getElementById(id-1);
+                Node * prevId = getNodeById(id-1);
                 Node * currentId = prevId->getNext();
                 Node * nextId = currentId->getNext();
                 prevId->setNext(temp);
@@ -331,7 +349,7 @@ public:
                 removeLast();
             }
             else {
-                Node * prevId = getElementById(id-1);
+                Node * prevId = getNodeById(id-1);
                 Node * currentId = prevId->getNext();
                 Node * nextId = currentId->getNext();
                 prevId->setNext(nextId);
@@ -348,8 +366,8 @@ public:
                 return;
             }
             else {
-                Node * prevId1 = getElementById( id1 - 1 );
-                Node * prevId2 = getElementById( id2 - 1 );
+                Node * prevId1 = getNodeById( id1 - 1 );
+                Node * prevId2 = getNodeById( id2 - 1 );
                 Node * currId1 = prevId1->getNext();
                 Node * currId2 = prevId2->getNext();
                 Node * nextId1 = currId1->getNext();
