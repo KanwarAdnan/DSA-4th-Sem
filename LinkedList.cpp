@@ -75,9 +75,7 @@ public:
         if (isEmpty())
             head = temp;
         else {
-            Node * temp2 = head;
-            while (temp2->getNext() != NULL)
-                temp2 = temp2->getNext();
+            Node * temp2 = getNodeById(length);
             temp2->setNext(temp);
         }
         length++;
@@ -126,12 +124,8 @@ public:
             head = NULL;
         }
         else {
-            Node * temp = head;
-            Node * temp2 = head->getNext();
-            while (temp2->getNext() != NULL){
-                temp2 = temp2->getNext(); // last
-                temp = temp->getNext(); // second last
-            }
+            Node * temp = getNodeById( length - 1 );
+            Node * temp2 = temp->getNext();
             delete temp2;
             temp->setNext(NULL);
         }
@@ -184,20 +178,14 @@ public:
         }
         return -9999;
     }
-
+//**
     void deleteElementById(int id){
         if ( (!isEmpty()) && (isIndex(id)) ){
             if ( (id == 1) && (length <= 2) )
                 removeFirst();
             else {
-                Node * temp = head;
-                Node * temp2 = head->getNext();
-                int count = 2;
-                while (count != id){
-                    temp = temp->getNext();
-                    temp2 = temp2->getNext();
-                    count++;
-                }
+                Node * temp = getNodeById( id - 1 );
+                Node * temp2 = temp->getNext();
                 Node * next = temp2->getNext();
                 temp->setNext(next);
                 delete temp2;
@@ -260,16 +248,21 @@ public:
 
 
     void reverse(){
-        Node * previous = NULL;
-        Node * current = head;
-        Node * next = NULL;
-        while(current != NULL){
-            next = current->getNext();
-            current->setNext(previous);
-            previous = current;
-            current = next;
+        if (!isEmpty()){
+            if (length == 1){
+                return;
+            }
+            Node * previous = NULL;
+            Node * current = head;
+            Node * next = NULL;
+            while(current != NULL){
+                next = current->getNext();
+                current->setNext(previous);
+                previous = current;
+                current = next;
+            }
+            head = previous;
         }
-        head = previous;
     }
 
     void insertAtId(int id,int value){
@@ -349,9 +342,8 @@ int main(){
     l1.insertAtLast(4);
     l1.insertAtLast(5);
     l1.print();
-    Node * temp = l1.getFirst();
     cout << "NULL";
-    l1.printRev(temp);
+    l1.printRev(l1.getFirst());
 }
 /*
 Output: 
