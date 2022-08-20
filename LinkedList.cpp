@@ -32,10 +32,9 @@
 using namespace std;
 
 class Node{
-private:
+public:
     int data;
     Node * next;
-public:
     Node() : data(0), next(NULL) {}
 
     Node(int data, Node * next = NULL){
@@ -304,21 +303,90 @@ public:
         }
     }
 
-    // Incomplete
+    void swapElements(int x, int y){
+        // Copied from geeeksforgeeks
+        // Nothing to do if x and y are same
+        if (x == y)
+            return;
+     
+        // Search for x (keep track of prevX and CurrX
+        Node *prevX = NULL, *currX = head;
+        while (currX && currX->data != x) {
+            prevX = currX;
+            currX = currX->next;
+        }
+     
+        // Search for y (keep track of prevY and CurrY
+        Node *prevY = NULL, *currY = head;
+        while (currY && currY->data != y) {
+            prevY = currY;
+            currY = currY->next;
+        }
+     
+        // If either x or y is not present, nothing to do
+        if (currX == NULL || currY == NULL)
+            return;
+     
+        // If x is not head of linked list
+        if (prevX != NULL)
+            prevX->next = currY;
+        else // Else make y as new head
+            head = currY;
+     
+        // If y is not head of linked list
+        if (prevY != NULL)
+            prevY->next = currX;
+        else // Else make x as new head
+            head = currX;
+     
+        // Swap next pointers
+        Node* temp = currY->next;
+        currY->next = currX->next;
+        currX->next = temp;     
+    }
+
+    // Mine but inspired from above code
     void swap(int id1, int id2){
         if (isIndex(id1) && isIndex(id2)){
             if (id1 == id2)
                 return;
             else {
-                Node * prevId1 = getNodeById( id1 - 1 );
-                Node * prevId2 = getNodeById( id2 - 1 );
-                Node * currId1 = prevId1->getNext();
-                Node * currId2 = prevId2->getNext();
-                Node * nextId1 = currId1->getNext();
+                Node * prevId1 = NULL , * currId1 = head;
+                Node * prevId2 = NULL , * currId2 = head;
+                
+                int count = 1;
+                while (count != id1){
+                    prevId1 = currId1;
+                    currId1 = currId1->getNext();
+                    count++;
+                }
+                
+                count = 1;
+                while (count != id2){
+                    prevId2 = currId2;
+                    currId2 = currId2->getNext();
+                    count++;
+                }
+                
+                if (currId1 == NULL || currId2 == NULL){
+                    return;
+                }
+                
+                if (prevId1 != NULL){
+                    prevId1->setNext(currId2);
+                }
+                else {
+                    head = currId2;
+                }
+
+                if (prevId2 != NULL){
+                    prevId2->setNext(currId1);
+                }
+                else {
+                    head = currId1;
+                }
                 Node * nextId2 = currId2->getNext();
-                prevId1->setNext(currId2);
-                currId2->setNext(nextId1);
-                prevId2->setNext(currId1);
+                currId2->setNext(currId1->getNext());
                 currId1->setNext(nextId2);
             }
         }
@@ -356,31 +424,18 @@ public:
 
 int main(){
     LinkedList l1;
-    l1.insertAtLast(1);
-    l1.insertAtLast(1);
-    l1.insertAtLast(1);
-    l1.insertAtLast(1);
     l1.insertAtLast(2);
-    l1.insertAtLast(2);
-    l1.insertAtLast(2);
-    l1.insertAtLast(2);
-    l1.insertAtLast(3);
     l1.insertAtLast(4);
-    l1.insertAtLast(3);
-    l1.insertAtLast(4);
-    l1.insertAtLast(3);
-    l1.insertAtLast(4);
-    l1.insertAtLast(5);
-    l1.insertAtLast(5);
-    l1.insertAtLast(5);
+    l1.insertAtLast(6);
+    l1.insertAtLast(8);
     l1.print();
-    l1.remDup();
+    l1.swaps(1,4);
     l1.print();
     // cout << "NULL";
     // l1.printRev(l1.getFirst());
 }
 /*
 Output: 
-    1->1->1->1->2->2->2->2->3->4->3->4->3->4->5->5->5->NULL
-    1->2->3->4->5->NULL
+    2->4->6->8->NULL
+    8->4->6->2->NULL
 */
