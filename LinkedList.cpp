@@ -27,6 +27,10 @@
         24) getFirstElement()
         25) getLastElement()
         26) getNodeById(int id)
+        27) swapElements(int x , int y)
+        28) swap(int id1 , int id2)
+        29) sort()
+        30) remDup()
 */
 #include <iostream>
 using namespace std;
@@ -345,6 +349,27 @@ public:
         currX->next = temp;     
     }
 
+    void sort(){
+        Node* cur1 = head;
+        Node* cur2 = head;
+
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < length - 1; j++) {
+                if (cur1->data < cur2->data) {
+                    int temp = cur1->data;
+                    cur1->data = cur2->data;
+                    cur2->data = temp;
+                }
+                cur2 = cur2->next;
+            }
+            cur2 = head;
+            cur1 = head->next;
+            for (int k = 0; k < i; k++) {
+                cur1 = cur1->next;
+            }
+        }        
+    }
+
     // Mine but inspired from above code
     void swap(int id1, int id2){
         if (isIndex(id1) && isIndex(id2)){
@@ -391,7 +416,7 @@ public:
             }
         }
     }
-
+    
     void printRev(Node * current){
         if (current == NULL)
             return;
@@ -424,18 +449,18 @@ public:
 
 int main(){
     LinkedList l1;
-    l1.insertAtLast(2);
-    l1.insertAtLast(4);
-    l1.insertAtLast(6);
     l1.insertAtLast(8);
+    l1.insertAtLast(6);
+    l1.insertAtLast(4);
+    l1.insertAtLast(2);
     l1.print();
-    l1.swap(1,4);
+    l1.sort();
     l1.print();
     // cout << "NULL";
     // l1.printRev(l1.getFirst());
 }
 /*
 Output: 
+    8->6->4->2->NULL
     2->4->6->8->NULL
-    8->4->6->2->NULL
 */
