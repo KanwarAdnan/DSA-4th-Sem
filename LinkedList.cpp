@@ -331,22 +331,56 @@ public:
         cout << "<-" << current->getData();
     }
     
+    void remDup(){
+        LinkedList l1;
+        l1.insertAtLast(head->getData());
+        Node * toDelete = head;
+        head = head->getNext();
+        delete toDelete;
+        
+        while (head != NULL){
+            if (!l1.doesExist(head->getData())){
+                l1.insertAtLast(head->getData());
+            }
+            toDelete = head;
+            head = head->getNext();
+            delete toDelete;
+        }
+        delete head;
+        head = l1.getFirst();
+        length = l1.getLength();
+    }
+
 };
 
 
 int main(){
     LinkedList l1;
     l1.insertAtLast(1);
+    l1.insertAtLast(1);
+    l1.insertAtLast(1);
+    l1.insertAtLast(1);
+    l1.insertAtLast(2);
+    l1.insertAtLast(2);
+    l1.insertAtLast(2);
     l1.insertAtLast(2);
     l1.insertAtLast(3);
     l1.insertAtLast(4);
+    l1.insertAtLast(3);
+    l1.insertAtLast(4);
+    l1.insertAtLast(3);
+    l1.insertAtLast(4);
+    l1.insertAtLast(5);
+    l1.insertAtLast(5);
     l1.insertAtLast(5);
     l1.print();
-    cout << "NULL";
-    l1.printRev(l1.getFirst());
+    l1.remDup();
+    l1.print();
+    // cout << "NULL";
+    // l1.printRev(l1.getFirst());
 }
 /*
 Output: 
+    1->1->1->1->2->2->2->2->3->4->3->4->3->4->5->5->5->NULL
     1->2->3->4->5->NULL
-    NULL<-5<-4<-3<-2<-1
 */
