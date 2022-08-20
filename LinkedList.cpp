@@ -429,7 +429,7 @@ int main(){
     l1.insertAtLast(6);
     l1.insertAtLast(8);
     l1.print();
-    l1.swaps(1,4);
+    l1.swap(1,4);
     l1.print();
     // cout << "NULL";
     // l1.printRev(l1.getFirst());
