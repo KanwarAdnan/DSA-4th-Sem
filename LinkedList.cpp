@@ -15,21 +15,22 @@
         12) getLast()
         13) getElementById(int id)
         14) getElementByValue(int value)
-        15) getNodeIdByValue(int value)
-        16) deleteByValue(int value)
-        17) doesExist(int value)
-        18) doesExistRet(int value , int * index)
-        19) reverse()
-        20) print()
-        21) printWithIndex()
-        22) printRev(Node * current)
-        23) getFirstElement()
-        24) getLastElement()
-        25) getNodeById(int id)
-        26) swapElements(int x , int y)
-        27) swap(int id1 , int id2)
-        28) sort()
-        29) removeDuplicates()
+        15) getMiddle()
+        16) getNodeIdByValue(int value)
+        17) deleteByValue(int value)
+        18) doesExist(int value)
+        19) doesExistRet(int value , int * index)
+        20) reverse()
+        21) print()
+        22) printWithIndex()
+        23) printRev(Node * current)
+        24) getFirstElement()
+        25) getLastElement()
+        26) getNodeById(int id)
+        27) swapElements(int x , int y)
+        28) swap(int id1 , int id2)
+        29) sort()
+        30) removeDuplicates()
 */
 #include <iostream>
 using namespace std;
@@ -219,6 +220,14 @@ public:
     
     // Getters ------------------------------
 
+    int getMiddle(){
+        int mid = 0;
+        if (length % 2 == 0)
+            mid = (length / 2);
+        else
+            mid = (length / 2) + 1;
+        return getNodeById(mid)->getData();
+    }
 
     int getElementById(int id){
         Node * temp = getNodeById(id);
@@ -441,27 +450,24 @@ public:
         head = l1.getFirst();
         length = l1.getLength();
     }
-    
 };
 
 
 int main(){
     LinkedList l1;
-    l1.insertAtLast(8);
-    l1.insertAtLast(8);
-    l1.insertAtLast(6);
-    l1.insertAtLast(6);
-    l1.insertAtLast(4);
-    l1.insertAtLast(4);
-    l1.insertAtLast(2);
-    l1.insertAtLast(2);
+    for (int i = 12 ; i != 0 ; i = i - 2)
+        l1.insertAtLast(i);
+    for (int i = 12 ; i != 0 ; i = i - 2)
+        l1.insertAtLast(i);
     l1.print();
     l1.sort();
     l1.removeDuplicates();
     l1.print();
+    cout << l1.getMiddle() << endl;
 }
 /*
 Output: 
-    8->8->6->6->4->4->2->2->NULL
-    2->4->6->8->NULL
+    12->10->8->6->4->2->12->10->8->6->4->2->NULL
+    2->4->6->8->10->12->NULL
+6
 */
