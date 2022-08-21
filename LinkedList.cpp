@@ -348,7 +348,7 @@ public:
         currY->next = currX->next;
         currX->next = temp;     
     }
-
+    
     void sort(){
         Node* cur1 = head;
         Node* cur2 = head;
@@ -443,6 +443,11 @@ public:
         head = l1.getFirst();
         length = l1.getLength();
     }
+    
+    void printRev(){
+        cout << "NULL";
+        printRev(getFirst());
+    }
 
 };
 
@@ -456,8 +461,6 @@ int main(){
     l1.print();
     l1.sort();
     l1.print();
-    // cout << "NULL";
-    // l1.printRev(l1.getFirst());
 }
 /*
 Output: 
