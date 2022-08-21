@@ -30,10 +30,12 @@
         27) swapElements(int x , int y)
         28) swap(int id1 , int id2)
         29) sort()
-        30) removeDuplicates()
-        31) merge(LinkedList list)
-        32) mergeSort(LinkedList list)
-        33) copy(LinkedList list)
+        30) sortNodes()
+        31) removeDuplicates()
+        32) merge(LinkedList list)
+        33) mergeSort(LinkedList list)
+        34) copy(LinkedList list)
+        35) deleteList()
 */
 #include <iostream>
 using namespace std;
@@ -497,33 +499,78 @@ public:
         }
     }
 
-
-    
     void mergeSort(LinkedList list){
         merge(list);
         sort();
     }
+    
+    // i know it's not good but it works
+    
+    void sortNodes(){
+        Node * temp = head;
+        Node * temp2 = head->getNext();
+        int tempId = 1;
+        int temp2Id = 1;
+        LinkedList l1 , l2;
+        while ( temp != NULL ){
+            while ( temp2 != NULL ){
+                if ( (temp->getData()) < (temp2->getData()) ){
+                    l1.insertAtLast(tempId);
+                    l2.insertAtLast(temp2Id);
+                    //swap(tempId,temp2Id);
+                }
+                temp2 = temp2->getNext();
+                temp2Id++;
+            }
+            tempId++;
+            temp = temp->getNext();
+            temp2 = head;
+            temp2Id = 1;
+        }
+        Node * temp3 = l1.getFirst();
+        Node * temp4 = l2.getFirst();
+        
+        while (temp3 != NULL){
+            swap(temp3->getData(),temp4->getData());
+            temp3 = temp3->getNext();
+            temp4 = temp4->getNext();
+        }
+        l1.deleteList();
+        l2.deleteList();
+    }
+    
+    void deleteList(){
+        if (!isEmpty()){
+            Node * prev = NULL;
+            Node * temp = head;
+            while (temp != NULL){
+                prev = temp;
+                temp = temp->getNext();
+                delete prev;
+            }
+            head = NULL;
+        }
+    }
+    
 };
 
 
 int main(){
     LinkedList l1,l2;
-    for (int i = 12 ; i != 0 ; i = i - 2)
+    for (int i = 8 ; i != 0 ; i = i - 2)
         l1.insertAtLast(i);
-    for (int i = 12 ; i != 0 ; i = i - 2)
-        l2.insertAtLast(i);
     l1.print();
-    l2.print();
-    l1.copy(l2);
-    l1.print();
-    l2.removeLast();
-    l2.removeLast(); // see l1 remains unchanged
+    l1.sortNodes();
+    // l1.swap(2,1);
+    // l1.swap(3,1);
+    // l1.swap(3,2);
+    // l1.swap(4,1);
+    // l1.swap(4,2);
+    // l1.swap(4,3);
     l1.print();
 }
 /*
 Output: 
-    12->10->8->6->4->2->NULL
-    12->10->8->6->4->2->NULL
-    12->10->8->6->4->2->12->10->8->6->4->2->NULL
-    12->10->8->6->4->2->12->10->8->6->4->2->NULL
+    8->6->4->2->NULL
+    2->4->6->8->NULL
 */
