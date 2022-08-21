@@ -15,22 +15,21 @@
         12) getLast()
         13) getElementById(int id)
         14) getElementByValue(int value)
-        15) getElementIdByValue(int value)
-        16) deleteElementById(int id)
-        17) deleteElementByValue(int value)
-        18) doesExist(int value)
-        19) doesExistRet(int value , int * index)
-        20) reverse()
-        21) print()
-        22) printWithIndex()
-        23) printRev(Node * current)
-        24) getFirstElement()
-        25) getLastElement()
-        26) getNodeById(int id)
-        27) swapElements(int x , int y)
-        28) swap(int id1 , int id2)
-        29) sort()
-        30) remDup()
+        15) getNodeIdByValue(int value)
+        16) deleteByValue(int value)
+        17) doesExist(int value)
+        18) doesExistRet(int value , int * index)
+        19) reverse()
+        20) print()
+        21) printWithIndex()
+        22) printRev(Node * current)
+        23) getFirstElement()
+        24) getLastElement()
+        25) getNodeById(int id)
+        26) swapElements(int x , int y)
+        27) swap(int id1 , int id2)
+        28) sort()
+        29) removeDuplicates()
 */
 #include <iostream>
 using namespace std;
@@ -60,7 +59,7 @@ public:
     bool isEmpty()              { return (head == NULL); }
     bool isIndex(int index)     { return ( (index <= length) && (index > 0) ); }
     bool isValid(int index)     { return ( (!isEmpty()) && (isIndex(index)) ); }
-    Node* getFirst()            { return head; }
+    Node * getFirst()            { return getNodeById(1); }
     Node * getLast()            { return getNodeById(length); }
     int getFirstElement()       { return getFirst()->getData(); }
     int getLastElement()        { return getLast()->getData(); }
@@ -107,12 +106,10 @@ public:
 
     // Displaying Methods ------------------------------
 
+    // finally found a way to flex for loop :d jk
     void print(){
-        Node * temp = head;
-        while (temp != NULL){
+        for (Node * temp = head ; temp != NULL ; temp = temp->getNext())
             cout << temp->getData() << "->";
-            temp = temp->getNext();
-        }
         cout << "NULL\n";
     }
 
@@ -193,22 +190,7 @@ public:
         }
     }
 
-    void deleteElementById(int id){
-        if ( (!isEmpty()) && (isIndex(id)) ){
-            if ( (id == 1) && (length <= 2) )
-                removeFirst();
-            else {
-                Node * temp = getNodeById( id - 1 );
-                Node * temp2 = temp->getNext();
-                Node * next = temp2->getNext();
-                temp->setNext(next);
-                delete temp2;
-                length--;
-            }
-        }
-    }
-
-    void deleteElementByValue(int value){
+    void deleteByValue(int value){
         if (!isEmpty()){
             if ( (head->getData() == value) && (length <= 2) )
                 removeFirst();
@@ -270,7 +252,7 @@ public:
         return NULL;
     }
 
-    int getElementIdByValue(int value){
+    int getNodeIdByValue(int value){
         if (!isEmpty()){
             Node * temp = head;
             int count = 1;
@@ -331,7 +313,6 @@ public:
     }
 
     void swapElements(int x, int y){
-        // Copied from geeeksforgeeks
         // Nothing to do if x and y are same
         if (x == y)
             return;
@@ -482,5 +463,4 @@ int main(){
 Output: 
     8->8->6->6->4->4->2->2->NULL
     2->4->6->8->NULL
-
 */
