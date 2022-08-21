@@ -487,6 +487,7 @@ public:
                 return;
             else {
                 Node * temp = getNodeById(length); // last node
+                // again flexing for loop :D
                 for (Node * temp2 = list.getFirst() ; temp2 != NULL ; temp2 = temp2->getNext()){
                     insertAtLast(temp2->getData());
                 }
