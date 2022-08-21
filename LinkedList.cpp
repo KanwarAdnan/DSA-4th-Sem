@@ -59,7 +59,7 @@ public:
     bool isEmpty()              { return (head == NULL); }
     bool isIndex(int index)     { return ( (index <= length) && (index > 0) ); }
     bool isValid(int index)     { return ( (!isEmpty()) && (isIndex(index)) ); }
-    Node * getFirst()            { return getNodeById(1); }
+    Node * getFirst()           { return getNodeById(1); }
     Node * getLast()            { return getNodeById(length); }
     int getFirstElement()       { return getFirst()->getData(); }
     int getLastElement()        { return getLast()->getData(); }
@@ -134,6 +134,7 @@ public:
     void printRev(){
         cout << "NULL";
         printRev(getFirst());
+        cout << endl;
     }
 
 
@@ -354,22 +355,22 @@ public:
     }
     
     void sort(){
-        Node* cur1 = head;
-        Node* cur2 = head;
+        Node * temp = head;
+        Node * temp2 = head;
 
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < length - 1; j++) {
-                if (cur1->data < cur2->data) {
-                    int temp = cur1->data;
-                    cur1->data = cur2->data;
-                    cur2->data = temp;
+                if (temp->getData() < temp2->getData()) {
+                    int tempVal = temp->getData();
+                    temp->setData(temp2->getData());
+                    temp2->setData(tempVal);
                 }
-                cur2 = cur2->next;
+                temp2 = temp2->getNext();
             }
-            cur2 = head;
-            cur1 = head->next;
+            temp2 = head;
+            temp = head->getNext();
             for (int k = 0; k < i; k++) {
-                cur1 = cur1->next;
+                temp = temp->getNext();
             }
         }        
     }
