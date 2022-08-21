@@ -462,7 +462,7 @@ public:
         if (isEmpty()){
             if (!list.isEmpty()){
                 head = list.getFirst();
-                length++;
+                length += list.getLength();
             }
         }
         else {
@@ -479,7 +479,8 @@ public:
     void copy(LinkedList list){
         if (isEmpty()){
             if (!list.isEmpty()){
-                insertAtBeginning(list.getFirstElement());
+                for (Node * temp2 = list.getFirst() ; temp2 != NULL ; temp2 = temp2->getNext()){
+                    insertAtLast(temp2->getData());
             }
         }
         else {
