@@ -31,6 +31,8 @@
         28) swap(int id1 , int id2)
         29) sort()
         30) removeDuplicates()
+        31) merge(LinkedList list)
+        32) mergeSort(LinkedList list)
 */
 #include <iostream>
 using namespace std;
@@ -364,24 +366,26 @@ public:
     }
     
     void sort(){
-        Node * temp = head;
-        Node * temp2 = head;
-
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < length - 1; j++) {
-                if (temp->getData() < temp2->getData()) {
-                    int tempVal = temp->getData();
-                    temp->setData(temp2->getData());
-                    temp2->setData(tempVal);
+        if (!isEmpty() && length > 1){
+            Node * temp = head;
+            Node * temp2 = head;
+    
+            for (int i = 0; i < length; i++) {
+                for (int j = 0; j < length - 1; j++) {
+                    if (temp->getData() < temp2->getData()) {
+                        int tempVal = temp->getData();
+                        temp->setData(temp2->getData());
+                        temp2->setData(tempVal);
+                    }
+                    temp2 = temp2->getNext();
                 }
-                temp2 = temp2->getNext();
+                temp2 = head;
+                temp = head->getNext();
+                for (int k = 0; k < i; k++) {
+                    temp = temp->getNext();
+                }
             }
-            temp2 = head;
-            temp = head->getNext();
-            for (int k = 0; k < i; k++) {
-                temp = temp->getNext();
-            }
-        }        
+        }
     }
 
     // Mine but inspired from above code
@@ -450,24 +454,49 @@ public:
         head = l1.getFirst();
         length = l1.getLength();
     }
+    
+    // this will join two LinkedLists [changes will reflect]
+    
+    void merge(LinkedList list){
+        if (isEmpty()){
+            if (!list.isEmpty()){
+                head = list.getFirst();
+                length++;
+            }
+        }
+        else {
+            if (list.isEmpty()){
+                return;
+            }
+            else {
+                Node * temp = getNodeById(length); // last node
+                temp->setNext(list.getFirst());
+                length += list.getLength();
+            }
+        }
+    }
+    
+    void mergeSort(LinkedList list){
+        merge(list);
+        sort();
+    }
 };
 
 
 int main(){
-    LinkedList l1;
+    LinkedList l1,l2;
     for (int i = 12 ; i != 0 ; i = i - 2)
         l1.insertAtLast(i);
     for (int i = 12 ; i != 0 ; i = i - 2)
-        l1.insertAtLast(i);
+        l2.insertAtLast(i);
     l1.print();
-    l1.sort();
-    l1.removeDuplicates();
+    l2.print();
+    l1.mergeSort(l2);
     l1.print();
-    cout << l1.getMiddle() << endl;
 }
 /*
 Output: 
-    12->10->8->6->4->2->12->10->8->6->4->2->NULL
-    2->4->6->8->10->12->NULL
-6
+    12->10->8->6->4->2->NULL
+    12->10->8->6->4->2->NULL
+    2->2->4->4->6->6->8->8->10->10->12->12->NULL
 */
