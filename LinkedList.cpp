@@ -66,6 +66,8 @@ public:
     int getLastElement()        { return getLast()->getData(); }
     int getLength()             { return length; }
 
+    // Insertion Methods ------------------------------
+
     void insertAtBeginning(int value){
         Node * temp = new Node(value);
         temp->setNext(head);
@@ -83,6 +85,27 @@ public:
         }
         length++;
     }
+
+    void insertAtId(int id,int value){
+        if (!isEmpty() && isIndex(id) ){
+            if (id == 1)
+                insertAtBeginning(value);
+            else {
+                Node * temp = new Node(value);
+                Node * prevId = getNodeById(id-1);
+                Node * currentId = prevId->getNext();
+                prevId->setNext(temp);
+                temp->setNext(currentId);
+                length++;
+            }
+        }
+        // Comment it if does not need this
+        else if (!isEmpty() && (id > length) ){
+            insertAtLast(value);
+        }
+     }
+
+    // Displaying Methods ------------------------------
 
     void print(){
         Node * temp = head;
@@ -103,7 +126,22 @@ public:
         }
         cout << '\n';
     }
+
+    void printRev(Node * current){
+        if (current == NULL)
+            return;
+        printRev(current->getNext());
+        cout << "<-" << current->getData();
+    }
     
+    void printRev(){
+        cout << "NULL";
+        printRev(getFirst());
+    }
+
+
+    // deletion Methods ------------------------------
+
     void removeFirst(){
         if (isEmpty())
             return;
@@ -134,6 +172,70 @@ public:
         }
         length--;
     }
+    
+    // It's also same as deleteElementById
+    void removeAtId(int id){
+        if (!isEmpty() && isIndex(id)){
+            if (id == 1){
+                removeFirst();
+            }
+            else if (id == length){
+                removeLast();
+            }
+            else {
+                Node * prevId = getNodeById(id-1);
+                Node * currentId = prevId->getNext();
+                Node * nextId = currentId->getNext();
+                prevId->setNext(nextId);
+                delete currentId;
+                length--;
+            }
+        }
+    }
+
+    void deleteElementById(int id){
+        if ( (!isEmpty()) && (isIndex(id)) ){
+            if ( (id == 1) && (length <= 2) )
+                removeFirst();
+            else {
+                Node * temp = getNodeById( id - 1 );
+                Node * temp2 = temp->getNext();
+                Node * next = temp2->getNext();
+                temp->setNext(next);
+                delete temp2;
+                length--;
+            }
+        }
+    }
+
+    void deleteElementByValue(int value){
+        if (!isEmpty()){
+            if ( (head->getData() == value) && (length <= 2) )
+                removeFirst();
+            else {
+                Node * temp = head;
+                Node * temp2 = head->getNext();
+                while (temp2->getNext() != NULL){
+                    if (temp2->getData() == value){
+                        Node * next = temp2->getNext();
+                        temp->setNext(next);
+                        delete temp2;
+                        length--;
+                        return;
+                    }
+                    temp2 = temp2->getNext();
+                    temp = temp->getNext();
+                }
+                // If the last member is to delete
+                if (temp2->getData() == value){
+                    removeLast();
+                }
+            }
+        }
+    }
+    
+    // Getters ------------------------------
+
 
     int getElementById(int id){
         Node * temp = getNodeById(id);
@@ -181,47 +283,8 @@ public:
         }
         return -9999;
     }
-//**
-    void deleteElementById(int id){
-        if ( (!isEmpty()) && (isIndex(id)) ){
-            if ( (id == 1) && (length <= 2) )
-                removeFirst();
-            else {
-                Node * temp = getNodeById( id - 1 );
-                Node * temp2 = temp->getNext();
-                Node * next = temp2->getNext();
-                temp->setNext(next);
-                delete temp2;
-                length--;
-            }
-        }
-    }
 
-    void deleteElementByValue(int value){
-        if (!isEmpty()){
-            if ( (head->getData() == value) && (length <= 2) )
-                removeFirst();
-            else {
-                Node * temp = head;
-                Node * temp2 = head->getNext();
-                while (temp2->getNext() != NULL){
-                    if (temp2->getData() == value){
-                        Node * next = temp2->getNext();
-                        temp->setNext(next);
-                        delete temp2;
-                        length--;
-                        return;
-                    }
-                    temp2 = temp2->getNext();
-                    temp = temp->getNext();
-                }
-                // If the last member is to delete
-                if (temp2->getData() == value){
-                    removeLast();
-                }
-            }
-        }
-    }
+    // Some More Methods ------------------------------
 
     bool doesExist(int value){
         Node * temp = head;
@@ -249,7 +312,6 @@ public:
         return NULL;
     }
 
-
     void reverse(){
         if (!isEmpty()){
             if (length == 1){
@@ -265,45 +327,6 @@ public:
                 current = next;
             }
             head = previous;
-        }
-    }
-
-    void insertAtId(int id,int value){
-        if (!isEmpty() && isIndex(id) ){
-            if (id == 1)
-                insertAtBeginning(value);
-            else {
-                Node * temp = new Node(value);
-                Node * prevId = getNodeById(id-1);
-                Node * currentId = prevId->getNext();
-                prevId->setNext(temp);
-                temp->setNext(currentId);
-                length++;
-            }
-        }
-        // Comment it if does not need this
-        else if (!isEmpty() && (id > length) ){
-            insertAtLast(value);
-        }
-     }
-
-    // It's also same as deleteElementById
-    void removeAtId(int id){
-        if (!isEmpty() && isIndex(id)){
-            if (id == 1){
-                removeFirst();
-            }
-            else if (id == length){
-                removeLast();
-            }
-            else {
-                Node * prevId = getNodeById(id-1);
-                Node * currentId = prevId->getNext();
-                Node * nextId = currentId->getNext();
-                prevId->setNext(nextId);
-                delete currentId;
-                length--;
-            }
         }
     }
 
@@ -416,15 +439,8 @@ public:
             }
         }
     }
-    
-    void printRev(Node * current){
-        if (current == NULL)
-            return;
-        printRev(current->getNext());
-        cout << "<-" << current->getData();
-    }
-    
-    void remDup(){
+
+    void removeDuplicates(){
         LinkedList l1;
         l1.insertAtLast(head->getData());
         Node * toDelete = head;
@@ -444,26 +460,26 @@ public:
         length = l1.getLength();
     }
     
-    void printRev(){
-        cout << "NULL";
-        printRev(getFirst());
-    }
-
 };
 
 
 int main(){
     LinkedList l1;
     l1.insertAtLast(8);
+    l1.insertAtLast(8);
+    l1.insertAtLast(6);
     l1.insertAtLast(6);
     l1.insertAtLast(4);
+    l1.insertAtLast(4);
+    l1.insertAtLast(2);
     l1.insertAtLast(2);
     l1.print();
     l1.sort();
+    l1.removeDuplicates();
     l1.print();
 }
 /*
 Output: 
-    8->6->4->2->NULL
+    8->8->6->6->4->4->2->2->NULL
     2->4->6->8->NULL
 */
