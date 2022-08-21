@@ -60,7 +60,7 @@ public:
     bool isEmpty()              { return (head == NULL); }
     bool isIndex(int index)     { return ( (index <= length) && (index > 0) ); }
     bool isValid(int index)     { return ( (!isEmpty()) && (isIndex(index)) ); }
-    Node * getFirst()            { return getNodeById(1); }
+    Node* getFirst()            { return head; }
     Node * getLast()            { return getNodeById(length); }
     int getFirstElement()       { return getFirst()->getData(); }
     int getLastElement()        { return getLast()->getData(); }
@@ -69,46 +69,43 @@ public:
     // Insertion Methods ------------------------------
 
     void insertAtBeginning(int value){
-        Node * temp = new Node(value); // New node to add at the head
-        temp->setNext(head);        // setting head as the next of the node
-        head = temp;                // it will be okay if the head is null
-        length++;                   // as the next of node will also will be null
+        Node * temp = new Node(value);
+        temp->setNext(head);
+        head = temp;
+        length++;
     }
 
     void insertAtLast(int value){
-        if (isEmpty())              // if the head is null then add at the head first
-            insertAtBeginning(value);
+        Node * temp = new Node(value);
+        if (isEmpty())
+            head = temp;
         else {
-            Node * temp = new Node(value); // new node to add at the last
-            Node * temp2 = getNodeById(length); // getting the last node
-            temp2->setNext(temp);           // setting it's next to the new node
-        }                                   // the next of new last will be pointing at
-        length++;                           // null automatically
+            Node * temp2 = getNodeById(length);
+            temp2->setNext(temp);
+        }
+        length++;
     }
 
     void insertAtId(int id,int value){
-        if (!isEmpty() && isIndex(id) ){  // making sure index is correct
-            if (id == 1){               // if index is 1 adding node at the head
+        if (!isEmpty() && isIndex(id) ){
+            if (id == 1)
                 insertAtBeginning(value);
-            }
             else {
-                Node * temp = new Node(value); // new node to be added
-                Node * prevId = getNodeById(id-1); // getting previous node from the index
-                Node * currentId = prevId->getNext();   // current index using prev->next
-                prevId->setNext(temp);              // setting prev-next as new node
-                temp->setNext(currentId);           // setting new node's next as current node
-                length++; 
+                Node * temp = new Node(value);
+                Node * prevId = getNodeById(id-1);
+                Node * currentId = prevId->getNext();
+                prevId->setNext(temp);
+                temp->setNext(currentId);
+                length++;
             }
         }
-    }
         // Comment it if does not need this
-        else if (!isEmpty() && (id > length) ){     // this is just an extra function to add a
-            insertAtLast(value);                    // node at the end of the list if is out ouf bound
+        else if (!isEmpty() && (id > length) ){
+            insertAtLast(value);
         }
      }
 
     // Displaying Methods ------------------------------
-    // These methods will print the linkedlist in ascending and decending orders
 
     void print(){
         Node * temp = head;
@@ -130,8 +127,6 @@ public:
         cout << '\n';
     }
 
-    // These below two functions are overloaded
-
     void printRev(Node * current){
         if (current == NULL)
             return;
@@ -148,51 +143,67 @@ public:
     // deletion Methods ------------------------------
 
     void removeFirst(){
-        if (isEmpty())      // if list is empty then return
+        if (isEmpty())
             return;
-        else if (head->getNext() == NULL) { // if length is one then delete head
+        else if (head->getNext() == NULL) {
             delete head;
             head = NULL;
         }
         else {
-            Node * temp = head->getNext(); // getting head-next for assinging it
-            delete head;                    // as the new head of the list
-            head = temp;                    // then deleted the head
+            Node * temp = head->getNext();
+            delete head;
+            head = temp;
         }
         length--;
     }
 
     void removeLast(){
-        if (isEmpty())              // if empty return
+        if (isEmpty())
             return;
-        else if(head->getNext() == NULL){   // if length is 1 then remove head
-            removeFirst();
+        else if(head->getNext() == NULL){
+            delete head;
+            head = NULL;
         }
         else {
-            Node * temp = getNodeById( length - 1 ); // getting 2nd last element
-            Node * temp2 = temp->getNext();         // last element from 2nd last
-            delete temp2;                           // deleted the last element
-            temp->setNext(NULL);                    // closed the chain by setting null
-        }                                           // to the next of 2nd last
+            Node * temp = getNodeById( length - 1 );
+            Node * temp2 = temp->getNext();
+            delete temp2;
+            temp->setNext(NULL);
+        }
         length--;
     }
     
     // It's also same as deleteElementById
     void removeAtId(int id){
         if (!isEmpty() && isIndex(id)){
-            if (id == 1){                   // if id is 1 remove head
+            if (id == 1){
                 removeFirst();
             }
-            else if (id == length){         // if id is equal to length remove last
+            else if (id == length){
                 removeLast();
             }
             else {
-                Node * prevId = getNodeById(id-1);      // getting previous from id
-                Node * currentId = prevId->getNext();   // getting current from previou
-                Node * nextId = currentId->getNext();   // getting next from current
-                prevId->setNext(nextId);                // setting previous-next as nextId
-                delete currentId;                       // deleting the given index node
-                length--;                               
+                Node * prevId = getNodeById(id-1);
+                Node * currentId = prevId->getNext();
+                Node * nextId = currentId->getNext();
+                prevId->setNext(nextId);
+                delete currentId;
+                length--;
+            }
+        }
+    }
+
+    void deleteElementById(int id){
+        if ( (!isEmpty()) && (isIndex(id)) ){
+            if ( (id == 1) && (length <= 2) )
+                removeFirst();
+            else {
+                Node * temp = getNodeById( id - 1 );
+                Node * temp2 = temp->getNext();
+                Node * next = temp2->getNext();
+                temp->setNext(next);
+                delete temp2;
+                length--;
             }
         }
     }
@@ -469,6 +480,7 @@ int main(){
 }
 /*
 Output: 
-    8->6->4->2->NULL
+    8->8->6->6->4->4->2->2->NULL
     2->4->6->8->NULL
+
 */
