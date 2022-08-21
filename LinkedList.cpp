@@ -33,6 +33,7 @@
         30) removeDuplicates()
         31) merge(LinkedList list)
         32) mergeSort(LinkedList list)
+        33) copy(LinkedList list)
 */
 #include <iostream>
 using namespace std;
@@ -465,9 +466,8 @@ public:
             }
         }
         else {
-            if (list.isEmpty()){
+            if (list.isEmpty())
                 return;
-            }
             else {
                 Node * temp = getNodeById(length); // last node
                 temp->setNext(list.getFirst());
@@ -475,6 +475,25 @@ public:
             }
         }
     }
+    
+    void copy(LinkedList list){
+        if (isEmpty()){
+            if (!list.isEmpty()){
+                insertAtBeginning(list.getFirstElement());
+            }
+        }
+        else {
+            if (list.isEmpty())
+                return;
+            else {
+                Node * temp = getNodeById(length); // last node
+                for (Node * temp2 = list.getFirst() ; temp2 != NULL ; temp2 = temp2->getNext()){
+                    insertAtLast(temp2->getData());
+                }
+            }
+        }
+    }
+
     
     void mergeSort(LinkedList list){
         merge(list);
@@ -491,12 +510,16 @@ int main(){
         l2.insertAtLast(i);
     l1.print();
     l2.print();
-    l1.mergeSort(l2);
+    l1.copy(l2);
+    l1.print();
+    l2.removeLast();
+    l2.removeLast(); // see l1 remains unchanged
     l1.print();
 }
 /*
 Output: 
     12->10->8->6->4->2->NULL
     12->10->8->6->4->2->NULL
-    2->2->4->4->6->6->8->8->10->10->12->12->NULL
+    12->10->8->6->4->2->12->10->8->6->4->2->NULL
+    12->10->8->6->4->2->12->10->8->6->4->2->NULL
 */
