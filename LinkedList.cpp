@@ -59,6 +59,7 @@ public:
 class LinkedList{
 private:
     Node * head;
+    Node * last;
     int length;
 public:
     LinkedList() : length(0) , head(NULL) {}
@@ -67,6 +68,7 @@ public:
     bool isValid(int index)     { return ( (!isEmpty()) && (isIndex(index)) ); }
     Node * getFirst()           { return getNodeById(1); }
     Node * getLast()            { return getNodeById(length); }
+    Node * getLast2()           { return last;}
     int getFirstElement()       { return getFirst()->getData(); }
     int getLastElement()        { return getLast()->getData(); }
     int getLength()             { return length; }
@@ -75,6 +77,8 @@ public:
 
     void insertAtBeginning(int value){
         Node * temp = new Node(value);
+        if (isEmpty())
+            last = temp;
         temp->setNext(head);
         head = temp;
         length++;
@@ -88,6 +92,7 @@ public:
             Node * temp2 = getNodeById(length);
             temp2->setNext(temp);
         }
+        last = temp;
         length++;
     }
 
@@ -560,14 +565,7 @@ int main(){
     for (int i = 8 ; i != 0 ; i = i - 2)
         l1.insertAtLast(i);
     l1.print();
-    l1.sortNodes();
-    // l1.swap(2,1);
-    // l1.swap(3,1);
-    // l1.swap(3,2);
-    // l1.swap(4,1);
-    // l1.swap(4,2);
-    // l1.swap(4,3);
-    l1.print();
+    cout << l1.getLast2()->getData() << endl;
 }
 /*
 Output: 
