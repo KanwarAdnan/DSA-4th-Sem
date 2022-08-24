@@ -22,6 +22,7 @@
         19) doesExistRet(int value , int * index)
         20) reverse()
         21) print()
+        22) print(int x)
         22) printWithIndex()
         23) printRev(Node * current)
         24) getFirstElement()
@@ -39,7 +40,7 @@
 */
 #include <iostream>
 using namespace std;
-
+#include <time.h>
 class Node{
 public:
     int data;
@@ -115,12 +116,29 @@ public:
 
     // Displaying Methods ------------------------------
 
-    // finally found a way to flex for loop :d jk
     void print(){
-        for (Node * temp = head ; temp != NULL ; temp = temp->getNext())
+        Node * temp = head;
+        while ( temp != NULL){
             cout << temp->getData() << "->";
+            temp = temp->getNext();
+        }
         cout << "NULL\n";
     }
+
+    void print(int x){
+        Node * temp = head;
+        int count = 1;
+        if (x<length){
+            for(int i = 1 ; i != x ; i++){
+                cout << temp->getData() << "->";
+                temp = temp->getNext();
+            }
+        }
+        else {
+            print();
+        }
+    }
+
 
     void printWithIndex(){
         Node * temp = head;
@@ -315,24 +333,6 @@ public:
         return NULL;
     }
 
-    void reverse(){
-        if (!isEmpty()){
-            if (length == 1){
-                return;
-            }
-            Node * previous = NULL;
-            Node * current = head;
-            Node * next = NULL;
-            while(current != NULL){
-                next = current->getNext();
-                current->setNext(previous);
-                previous = current;
-                current = next;
-            }
-            head = previous;
-        }
-    }
-
     void swapElements(int x, int y){
         // Nothing to do if x and y are same
         if (x == y)
@@ -444,24 +444,20 @@ public:
         }
     }
 
+    // inserting at last takes 1 step
     void removeDuplicates(){
         LinkedList l1;
-        l1.insertAtLast(head->getData());
         Node * toDelete = head;
-        head = head->getNext();
-        delete toDelete;
-        
         while (head != NULL){
-            if (!l1.doesExist(head->getData())){
+            if (!l1.doesExist(head->getData()))
                 l1.insertAtLast(head->getData());
-            }
             toDelete = head;
             head = head->getNext();
             delete toDelete;
         }
-        delete head;
         head = l1.getFirst();
         length = l1.getLength();
+        last = l1.getLast();
     }
     
     // this will join two LinkedLists [changes will reflect]
@@ -511,7 +507,7 @@ public:
     }
     
     // i know it's not good but it works
-    
+    // i wanted to do it so i did
     void sortNodes(){
         Node * temp = head;
         Node * temp2 = head->getNext();
@@ -557,19 +553,41 @@ public:
             head = NULL;
         }
     }
+
+    void reverse(){
+        if (!isEmpty()){
+            if (length == 1){
+                return;
+            }
+            Node * previous = NULL;
+            Node * current = head;
+            Node * next = NULL;
+            while(current != NULL){
+                next = current->getNext();
+                current->setNext(previous);
+                previous = current;
+                current = next;
+            }
+            head = previous;
+        }
+    }
     
 };
 
 
 int main(){
-    LinkedList l1,l2;
-    for (int i = 8 ; i != 0 ; i = i - 2)
-        l1.insertAtLast(i);
-    l1.print();
-    cout << l1.getLast()->getData() << endl;
+    LinkedList * l1 = new LinkedList;
+    clock_t tStart = clock();
+    for (int i = 1 ; i != 99999999 ; i = i + 1)
+        l1->insertAtLast(i);
+    printf("Time taken: %.2fs\n", (double)(clock() - tStart)/CLOCKS_PER_SEC);
+    clock_t tStart2 = clock();
+    l1->reverse();
+    printf("Time taken: %.2fs\n", (double)(clock() - tStart2)/CLOCKS_PER_SEC);
+    l1->print(5);
 }
-/*
-Output: 
-    8->6->4->2->NULL
-    2
-*/
+  /*
+    Time taken: 4.02s
+    Time taken: 0.60s
+    99999998->99999997->99999996->99999995->99999994->
+  */
