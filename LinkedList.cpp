@@ -66,9 +66,8 @@ public:
     bool isEmpty()              { return (head == NULL); }
     bool isIndex(int index)     { return ( (index <= length) && (index > 0) ); }
     bool isValid(int index)     { return ( (!isEmpty()) && (isIndex(index)) ); }
-    Node * getFirst()           { return getNodeById(1); }
-    Node * getLast()            { return getNodeById(length); }
-    Node * getLast2()           { return last;}
+    Node * getFirst()           { return head; }
+    Node * getLast()            { return last; }
     int getFirstElement()       { return getFirst()->getData(); }
     int getLastElement()        { return getLast()->getData(); }
     int getLength()             { return length; }
@@ -89,8 +88,7 @@ public:
         if (isEmpty())
             head = temp;
         else {
-            Node * temp2 = getNodeById(length);
-            temp2->setNext(temp);
+            last->setNext(temp);
         }
         last = temp;
         length++;
@@ -567,15 +565,11 @@ int main(){
     LinkedList l1,l2;
     for (int i = 8 ; i != 0 ; i = i - 2)
         l1.insertAtLast(i);
-    l1.removeLast();
-    l1.removeLast();
-    l1.removeLast();
-    l1.removeLast();
     l1.print();
-    cout << l1.getLast2()->getData() << endl;
+    cout << l1.getLast()->getData() << endl;
 }
 /*
 Output: 
     8->6->4->2->NULL
-    2->4->6->8->NULL
+    2
 */
