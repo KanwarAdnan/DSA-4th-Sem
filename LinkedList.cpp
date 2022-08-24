@@ -157,6 +157,7 @@ public:
         else if (head->getNext() == NULL) {
             delete head;
             head = NULL;
+            last = NULL;
         }
         else {
             Node * temp = head->getNext();
@@ -172,12 +173,14 @@ public:
         else if(head->getNext() == NULL){
             delete head;
             head = NULL;
+            last = NULL;
         }
         else {
             Node * temp = getNodeById( length - 1 );
             Node * temp2 = temp->getNext();
             delete temp2;
             temp->setNext(NULL);
+            last = temp;
         }
         length--;
     }
@@ -564,6 +567,10 @@ int main(){
     LinkedList l1,l2;
     for (int i = 8 ; i != 0 ; i = i - 2)
         l1.insertAtLast(i);
+    l1.removeLast();
+    l1.removeLast();
+    l1.removeLast();
+    l1.removeLast();
     l1.print();
     cout << l1.getLast2()->getData() << endl;
 }
