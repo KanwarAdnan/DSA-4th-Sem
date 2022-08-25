@@ -1,3 +1,4 @@
+# Colab : https://colab.research.google.com/drive/16G-1Z-crBF6iiyE2Ka20md5XZKESJgJx#scrollTo=1Ci3dXpp1H9U
 import numpy as np
 import matplotlib.pyplot as plt
 # %matplotlib inline
