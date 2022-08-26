@@ -626,25 +626,20 @@ public:
         return NULL;
     }
     
+    void printArray(int * arr , int size){
+        for (int i = 0 ; i < size ; i++){
+            cout << arr[i] << " ";
+        }
+        cout << "\n";
+    }
+    
 };
 
-int main(){
-    LinkedList l1;
-    int arr[5] = {10,20,30,40,50};
-    l1.insertAtLast(arr,5);
-    l1.print();
-    int * arr2 = l1.toArray();
-    cout << "\n";
-    for (int i = 0 ; i < 5 ; i++){
-        cout << i << " : " << arr2[i] << endl;
-    }
-}
 
-/*
 int main(){
     LinkedList * l1 = new LinkedList;
     clock_t tStart = clock();
-    for (int i = 1 ; i != 99999999 ; i = i + 1)
+    for (int i = 1 ; i != 100000000 ; i = i + 1)
         l1->insertAtLast(i);
     printf("Time taken: %.2fs\n", (double)(clock() - tStart)/CLOCKS_PER_SEC);
     clock_t tStart2 = clock();
@@ -652,9 +647,9 @@ int main(){
     printf("Time taken: %.2fs\n", (double)(clock() - tStart2)/CLOCKS_PER_SEC);
     l1->print(5);
 }
+
+/*
+    Time taken: 4.59s
+    Time taken: 0.61s
+    99999999->99999998->99999997->99999996->
 */
-  /*
-    Time taken: 4.02s
-    Time taken: 0.60s
-    99999998->99999997->99999996->99999995->99999994->
-  */
