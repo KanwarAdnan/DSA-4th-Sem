@@ -1,6 +1,7 @@
 /*
     Queue using singly linked list variant
 */
+
 #include <iostream>
 using namespace std;
 class Node{
@@ -128,8 +129,28 @@ int main(){
     q1.enqueue(0);
     q1.enqueue(2);
     q1.enqueue(4);
-    q1.dequeue();
+    cout << "Printing Queue\n";
     q1.print();
-    cout << '\n';
-    cout << "Peek : " << q1.peek() << endl;
+    q1.dequeue();
+    cout << "\nQueue Methods : ";
+    cout << "\n\tPeek : " << q1.peek();
+    cout << "\n\tLength : " << q1.getLength();
+    cout << "\n\tIsFull : " << q1.isFull();
+    cout << "\n\tIsEmpty : " << q1.isEmpty();
+    cout << "\nAfter dequeue Queue\n";
+    q1.print();
 }
+
+/*
+Output :
+    Printing Queue
+    0->2->4->NULL
+    Queue Methods : 
+        Peek : 2
+        Length : 2
+        IsFull : 0
+        IsEmpty : 0
+    After dequeue Queue
+    2->4->NULL
+
+*/
