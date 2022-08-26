@@ -37,6 +37,9 @@
         33) mergeSort(LinkedList list)
         34) copy(LinkedList list)
         35) deleteList()
+        36) insertAtBeginning(int * arr , int size)
+        37) insertAtLast(int * arr , int size)
+        38) removeAtId(int * arr , int size) // Beta Version
 */
 #include <iostream>
 using namespace std;
@@ -93,6 +96,22 @@ public:
         }
         last = temp;
         length++;
+    }
+    
+    void insertAtBeginning(int * arr , int size){
+        if (size > 0){
+            for ( int i = 0 ; i < size ; i++){
+                insertAtBeginning(arr[i]);
+            }
+        }
+    }
+
+    void insertAtLast(int * arr , int size){
+        if (size > 0){
+            for ( int i = 0 ; i < size ; i++){
+                insertAtLast(arr[i]);
+            }
+        }
     }
 
     void insertAtId(int id,int value){
@@ -217,6 +236,15 @@ public:
                 prevId->setNext(nextId);
                 delete currentId;
                 length--;
+            }
+        }
+    }
+
+    // Beta Version
+    void removeAtId(int * arr , int size){
+        if (size > 0){
+            for (int i = 0 ; i < size ; i++){
+                removeAtId(arr[i]);
             }
         }
     }
@@ -574,7 +602,14 @@ public:
     
 };
 
+int main(){
+    LinkedList l1;
+    int arr[5] = {1,2,3,4,5};
+    l1.insertAtLast(arr,5);
+    l1.print();
+}
 
+/*
 int main(){
     LinkedList * l1 = new LinkedList;
     clock_t tStart = clock();
@@ -586,6 +621,7 @@ int main(){
     printf("Time taken: %.2fs\n", (double)(clock() - tStart2)/CLOCKS_PER_SEC);
     l1->print(5);
 }
+*/
   /*
     Time taken: 4.02s
     Time taken: 0.60s
