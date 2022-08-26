@@ -13,8 +13,8 @@ public:
         setData(data);
         setNext(next);
     }
-    Node * getNext()            { return next; }
-    int getData()               { return data; }
+    Node * getNext()            { return this->next; }
+    int getData()               { return this->data; }
     void setNext(Node * next)   { this->next = next; }
     void setData(int data)      { this->data = data; }
 };
