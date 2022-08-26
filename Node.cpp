@@ -4,24 +4,24 @@ using namespace std;
 class Node{
 private:
     int data;
-    Node* next;
+    Node * next;
 public:
     Node() : data(0), next(NULL) {}
 
-    Node(int data, Node* next = NULL){
+    Node(int data, Node * next = NULL){
         setData(data);
         setNext(next);
     }
     
     void setData(int data)      { this->data = data; }
-    void setNext(Node* next)    { this->next = next; }
+    void setNext(Node * next)   { this->next = next; }
     int getData()               { return this->data; }
-    Node* getNext()             { return this->next; }
+    Node * getNext()            { return this->next; }
 };
 
-int getNodeLength(Node* head){
+int getNodeLength(Node * head){
     int count = 0;
-    Node* temp = head;
+    Node * temp = head;
     while(temp != NULL){
         temp = temp->getNext();
         count++;
@@ -29,55 +29,58 @@ int getNodeLength(Node* head){
     return count;
 }
 
-void printNodeElements(Node* head){
-    Node* temp = head;
+void printNodeElements(Node * head){
+    Node * temp = head;
     while(temp != NULL){
-        cout << temp->getData() << ' ';
+        cout << temp->getData() << "->";
         temp = temp->getNext();
     }
+    cout << "NULL\n";
 }
 
-Node* getNode(Node* head,int index = 0){
-    Node* temp = head;
-    if (index != 0){
-        for(int i = 0 ; i < (index - 1) ; i++){
+Node * getNode(Node * head , int index){
+    Node * temp = head;
+    int count = 1;
+    if (index <= getNodeLength(head)){
+        while (count != index){
             temp = temp->getNext();
+            count++;
         }
         return temp;
     }
+    return NULL;
+}
+
+Node * getFirstNode(Node * head){
     return head;
 }
 
-Node* getFirstNode(Node * head){
-    return head;
-}
-
-Node* getLastNode(Node* head){
+Node * getLastNode(Node * head){
     return getNode(head,getNodeLength(head));
 }
 
-void insertNode(Node* head,int value){
-    Node* newNode = new Node(value);
-    Node* temp = getLastNode(head);
+void insertNode(Node * head,int value){
+    Node * newNode = new Node(value);
+    Node * temp = getLastNode(head);
     temp->setNext(newNode);
 }
 
 int main(){
-    Node* firstNode = NULL;
-    Node* lastNode = NULL;
-    Node* nthNode = NULL;
+    Node * firstNode = NULL;
+    Node * lastNode = NULL;
+    Node * nthNode = NULL;
     int length = 0;
     int n = 20;
 
     // Default (head)
-    Node* head = new Node(2);
+    Node * head = new Node(2);
 
     // linker
-    Node* link = head;
+    Node * link = head;
 
     // dynamically making Nodes and joining them
     while(n--){
-        Node* temp = new Node(n);
+        Node * temp = new Node(n);
         link->setNext(temp);
         link = link->getNext();
     }
@@ -114,11 +117,12 @@ int main(){
 
 /*
 Output Section:
-First Node : 2
-Last  Node : 0
-nth   Node : 13
-Node Length   : 21
-Complete Node : 2 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 
-New Node : 100
-New Length : 22
+    First Node : 2
+    Last  Node : 0
+    nth   Node : 13
+    Node Length   : 21
+    Complete Node : 2->19->18->17->16->15->14->13->12->11->10->9->8->7->6->5->4->3->2->1->0->NULL
+    
+    New Node : 100
+    New Length : 22
 */
