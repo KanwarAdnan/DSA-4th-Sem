@@ -41,6 +41,7 @@
         37) insertAtLast(int * arr , int size)
         38) removeAtId(int * arr , int size) Beta Version works for ascendingly sorted array
         39) deleteByValue(int * arr , int size)
+        40) toArray()
 */
 #include <iostream>
 using namespace std;
@@ -610,15 +611,33 @@ public:
         }
     }
     
+    int * toArray(){
+        if (!isEmpty()){
+            int * arr = new int[length];
+            int count = 0;
+            Node * temp = head;
+            while(temp != NULL){
+                arr[count] = temp->getData();
+                temp = temp->getNext();
+                count++;
+            }
+            return arr;
+        }
+        return NULL;
+    }
+    
 };
 
 int main(){
     LinkedList l1;
-    int arr[5] = {1,2,3,4,5};
+    int arr[5] = {10,20,30,40,50};
     l1.insertAtLast(arr,5);
     l1.print();
-    l1.deleteByValue(arr,5);
-    l1.print();
+    int * arr2 = l1.toArray();
+    cout << "\n";
+    for (int i = 0 ; i < 5 ; i++){
+        cout << i << " : " << arr2[i] << endl;
+    }
 }
 
 /*
