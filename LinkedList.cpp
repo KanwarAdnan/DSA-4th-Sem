@@ -39,7 +39,8 @@
         35) deleteList()
         36) insertAtBeginning(int * arr , int size)
         37) insertAtLast(int * arr , int size)
-        38) removeAtId(int * arr , int size)
+        38) removeAtId(int * arr , int size) Beta Version works for ascendingly sorted array
+        39) deleteByValue(int * arr , int size)
 */
 #include <iostream>
 using namespace std;
@@ -239,7 +240,7 @@ public:
             }
         }
     }
-
+    // Beta Version
     void removeAtId(int * arr , int size){
         if (size > 0){
             int constant = 0;
@@ -252,7 +253,7 @@ public:
 
     void deleteByValue(int value){
         if (!isEmpty()){
-            if ( (head->getData() == value) && (length <= 2) )
+            if ( (head->getData() == value) )
                 removeFirst();
             else {
                 Node * temp = head;
@@ -276,6 +277,14 @@ public:
         }
     }
     
+    void deleteByValue(int * arr , int size){
+        if (size > 0){
+            for (int i = 0 ; i < size ; i++){
+                deleteByValue(arr[i]);
+            }
+        }
+    }
+
     // Getters ------------------------------
 
     int getMiddle(){
@@ -608,7 +617,7 @@ int main(){
     int arr[5] = {1,2,3,4,5};
     l1.insertAtLast(arr,5);
     l1.print();
-    l1.removeAtId(arr,5);
+    l1.deleteByValue(arr,5);
     l1.print();
 }
 
