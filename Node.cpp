@@ -15,7 +15,7 @@ public:
     
     void setData(int data)      { this->data = data; }
     void setNext(Node * next)   { this->next = next; }
-    int getData()               { return this->data; }
+    int getData()               { return data; }
     Node * getNext()            { return this->next; }
 };
 
