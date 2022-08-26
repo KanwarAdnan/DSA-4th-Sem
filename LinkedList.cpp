@@ -39,7 +39,7 @@
         35) deleteList()
         36) insertAtBeginning(int * arr , int size)
         37) insertAtLast(int * arr , int size)
-        38) removeAtId(int * arr , int size) // Beta Version
+        38) removeAtId(int * arr , int size)
 */
 #include <iostream>
 using namespace std;
@@ -240,11 +240,12 @@ public:
         }
     }
 
-    // Beta Version
     void removeAtId(int * arr , int size){
         if (size > 0){
+            int constant = 0;
             for (int i = 0 ; i < size ; i++){
-                removeAtId(arr[i]);
+                removeAtId(arr[i]-constant);
+                constant++;
             }
         }
     }
@@ -606,6 +607,8 @@ int main(){
     LinkedList l1;
     int arr[5] = {1,2,3,4,5};
     l1.insertAtLast(arr,5);
+    l1.print();
+    l1.removeAtId(arr,5);
     l1.print();
 }
 
