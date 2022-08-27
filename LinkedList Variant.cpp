@@ -49,6 +49,7 @@ class LinkedList{
             temp->setNext(head);
             last = head;
             head = temp;
+            length++;
         }
 
         void insertAtLast(int x){
@@ -60,9 +61,11 @@ class LinkedList{
                 }
                 temp->setNext(n);
                 last = n;
+                length++;
             }
             else {
                 head = n;
+                length++;
             }
             }
         void removeFirst(){
@@ -72,11 +75,13 @@ class LinkedList{
             else if (head->getNext() == NULL) {
                 delete head;
                 head = NULL;
+                length--;
             }
             else {
                 Node * temp = head->getNext();
                 delete head;
                 head = temp;
+                length--;
             }
         }
 
