@@ -598,6 +598,7 @@ public:
             if (length == 1){
                 return;
             }
+            last = head; // reserving the last
             Node * previous = NULL;
             Node * current = head;
             Node * next = NULL;
@@ -634,7 +635,6 @@ public:
     }
     
 };
-
 
 int main(){
     LinkedList * l1 = new LinkedList;
