@@ -102,7 +102,7 @@ public:
     
     void insertAtBeginning(int * arr , int size){
         if (size > 0){
-            for ( int i = 0 ; i < size ; i++){
+            for ( int i = size - 1 ; i >= 0 ; i--){
                 insertAtBeginning(arr[i]);
             }
         }
@@ -636,6 +636,16 @@ public:
     
 };
 
+int main(){
+    LinkedList l1;
+    int arr[5] = {1,2,3,4,5};
+    l1.insertAtLast(1);
+    l1.insertAtLast(2);
+    l1.insertAtBeginning(arr,5);
+    l1.print();
+}
+
+/*
 int main(){
     LinkedList * l1 = new LinkedList;
     clock_t tStart = clock();
