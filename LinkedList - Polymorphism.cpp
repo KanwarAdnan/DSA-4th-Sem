@@ -28,12 +28,21 @@ protected:
 public:
     int getLength()             { return this->length; }
     bool isEmpty()              { return this->head == NULL; }
+
+    void print(){
+        Node * temp = this->head;
+        while (temp != NULL){
+            cout << temp->getData() << "->";
+            temp = temp->getNext();
+        }
+        cout << "NULL\n";
+    }
+
     // virtual functions
     virtual void insertAtHead(int) = 0;
     virtual void insertAtLast(int) = 0;
     virtual void removeAtHead() = 0;
     virtual void removeAtLast() = 0;
-    virtual void print() = 0;
     virtual Node * getHead() = 0;
 
 };
@@ -86,7 +95,7 @@ public:
                 removeAtHead();
             }
             else {
-                Node * previous = NULL; // second Last ptr
+                Node * previous = NULL; // Last ptr
                 Node * current = this->head; // null pointer in the end
                 while (current->getNext() != NULL){
                     previous = current;
@@ -99,17 +108,6 @@ public:
             }
         }
     }
-    
-    void print(){
-        Node * temp = this->head;
-        while (temp != NULL){
-            cout << temp->getData() << "->";
-            temp = temp->getNext();
-        }
-        cout << "NULL\n";
-    }
-    
-    
 };
 
 int main(){
