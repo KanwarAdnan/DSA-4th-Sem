@@ -28,6 +28,7 @@ protected:
 public:
     int getLength()             { return this->length; }
     bool isEmpty()              { return this->head == NULL; }
+    virtual Node * getHead()    { return this->head; }
 
     void print(){
         Node * temp = this->head;
@@ -43,14 +44,11 @@ public:
     virtual void insertAtLast(int) = 0;
     virtual void removeAtHead() = 0;
     virtual void removeAtLast() = 0;
-    virtual Node * getHead() = 0;
 
 };
 
 class Singly : public LinkedList{
 public:
-    Node * getHead()            { return this->head; }
-
     void insertAtHead(int value){
         Node * temp = new Node(value,this->head);
         this->head = temp;
@@ -110,15 +108,31 @@ public:
     }
 };
 
+class Doubly : public LinkedList{
+public:
+    void insertAtHead(int value){
+        Node * temp = new Node(value,this->head);
+        this->head = temp;
+        this->length++;
+    }
+    void insertAtLast(int value){
+        cout << "insertAtLast\n";
+    }
+    void removeAtLast(){
+        cout << "removeAtLast\n";
+    }
+    void removeAtHead(){
+        cout << "removeAtHead\n";
+    }
+
+};
+
 int main(){
-    LinkedList * l1 = new Singly;
-    l1->insertAtLast(2);
-    l1->removeAtLast();
-    l1->insertAtLast(2);
-    l1->insertAtLast(4);
+    LinkedList * l1 = new Doubly;
+    l1->insertAtHead(1);
     l1->insertAtHead(1);
     l1->print();
-    cout << "SLL Length : " << l1->getLength();
+    cout << "DLL Length : " << l1->getLength();
     cout << endl;
     return 0;
 }
