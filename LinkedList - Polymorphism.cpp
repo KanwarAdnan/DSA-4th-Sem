@@ -32,6 +32,7 @@ public:
     virtual void insertAtHead(int) = 0;
     virtual void insertAtLast(int) = 0;
     virtual void removeAtHead() = 0;
+    virtual void removeAtLast() = 0;
     virtual void print() = 0;
     virtual Node * getHead() = 0;
 
@@ -78,6 +79,26 @@ public:
             this->length--;
         }
     }
+
+    void removeAtLast(){
+        if (!this->isEmpty()){
+            if (this->getLength() == 1){
+                removeAtHead();
+            }
+            else {
+                Node * previous = NULL; // second Last ptr
+                Node * current = this->head; // null pointer in the end
+                while (current->getNext() != NULL){
+                    previous = current;
+                    current = current->getNext();
+                }
+                Node * temp = previous->getNext(); //
+                previous->setNext(NULL);
+                delete temp;
+                this->length--;
+            }
+        }
+    }
     
     void print(){
         Node * temp = this->head;
@@ -94,8 +115,9 @@ public:
 int main(){
     LinkedList * l1 = new Singly;
     l1->insertAtLast(2);
+    l1->removeAtLast();
     l1->insertAtLast(2);
-    l1->insertAtLast(2);
+    l1->insertAtLast(4);
     l1->insertAtHead(1);
     l1->print();
     cout << "SLL Length : " << l1->getLength();
