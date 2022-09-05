@@ -138,7 +138,19 @@ public:
         cout << "removeAtLast\n";
     }
     void removeAtHead(){
-        cout << "removeAtHead\n";
+        if (!this->isEmpty()){
+            if (this->getLength() == 1){
+                delete this->head;
+                this->head = NULL;
+            }
+            else {
+                Node * temp = this->head; // to delete
+                this->head = this->head->getNext();
+                delete temp;
+                this->head->setPrev(NULL);
+            }
+            this->length--;
+        }
     }
 
     void print(){
@@ -158,6 +170,8 @@ int main(){
     l1->insertAtHead(1);
     l1->insertAtHead(1);
     l1->insertAtLast(2);
+    l1->removeAtHead();
+    l1->removeAtHead();
     l1->print();
     cout << "DLL Length : " << l1->getLength();
     cout << endl;
