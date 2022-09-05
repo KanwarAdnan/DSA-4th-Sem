@@ -28,7 +28,20 @@ protected:
 public:
     int getLength()             { return this->length; }
     bool isEmpty()              { return this->head == NULL; }
-    virtual Node * getHead()    { return this->head; }
+    bool isIndex(int index)     { return ( (index <= this->getLength()) && (index > 0) ); }
+    
+    Node * getNodeById(int id){
+        if ((!isEmpty()) && (isIndex(id))){
+            Node * temp = head;
+            int count = 1;
+            while (count != id){
+                temp = temp->getNext();
+                count++;
+            }
+            return temp;
+        }
+        return NULL;
+    }
 
 
     // virtual functions
@@ -51,16 +64,12 @@ public:
     void insertAtLast(int value){
         if (this->isEmpty()){
             this->insertAtHead(value);
+            return;
         }
         else {
             Node * temp = new Node(value);
-            Node * previous = NULL; // Last ptr
-            Node * current = this->head; // null pointer in the end
-            while (current != NULL){
-                previous = current;
-                current = current->getNext();
-            }
-            previous->setNext(temp);
+            Node * last = this->getNodeById(this->getLength()); // last node
+            last->setNext(temp);
         }
         this->length++;
     }
@@ -84,17 +93,13 @@ public:
         if (!this->isEmpty()){
             if (this->getLength() == 1){
                 this->removeAtHead();
+                return;
             }
             else {
-                Node * previous = NULL; // Last ptr
-                Node * current = this->head; // null pointer in the end
-                while (current->getNext() != NULL){
-                    previous = current;
-                    current = current->getNext();
-                }
-                Node * temp = previous->getNext(); //
-                previous->setNext(NULL);
-                delete temp;
+                Node * secLast = this->getNodeById(this->getLength() - 1); // second node
+                Node * last = secLast->getNext(); // last node
+                secLast->setNext(NULL);
+                delete last;
                 this->length--;
             }
         }
@@ -122,15 +127,9 @@ public:
             this->insertAtHead(value);
         }
         else {
-            Node * previous = NULL;
-            Node * current = this->head;
-            
-            while (current != NULL){
-                previous = current;
-                current = current->getNext();
-            }
-            Node * temp = new Node(value,NULL,previous);
-            previous->setNext(temp);
+            Node * last = this->getNodeById(this->getLength());
+            Node * temp = new Node(value,NULL,last); // last will be previous of new last 
+            last->setNext(temp);
             this->length++;
         }
     }
@@ -138,17 +137,13 @@ public:
         if (!this->isEmpty()){
             if (this->getLength() == 1){
                 this->removeAtHead();
+                return;
             }
             else {
-                Node * previous = NULL; // second last ptr
-                Node * current = this->head; // null ptr in the end
-                
-                while (current->getNext() != NULL){
-                    previous = current;
-                    current = current->getNext();
-                }
-                previous->setNext(NULL);
-                delete current;
+                Node * secLast = this->getNodeById(this->getLength() - 1); // second last ptr
+                Node * last = secLast->getNext();
+                secLast->setNext(NULL);
+                delete last;
                 this->length--;
             }
         }
