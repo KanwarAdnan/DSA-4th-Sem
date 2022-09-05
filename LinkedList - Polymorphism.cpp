@@ -50,7 +50,7 @@ public:
     virtual void insertAtLast(int) = 0;
     virtual void removeAtHead() = 0;
     virtual void removeAtLast() = 0;
-
+    virtual void self() = 0;
 };
 
 class Singly : public LinkedList{
@@ -113,6 +113,11 @@ public:
         }
         cout << "NULL\n";
     }
+    
+    void self(){
+        cout << "Singly\n";
+    }
+    
 };
 
 class Doubly : public LinkedList{
@@ -174,6 +179,11 @@ public:
         }
         cout << "NULL\n";
     }
+
+    void self(){
+        cout << "Doubly\n";
+    }
+    
 };
 
 class CircularSingly : public LinkedList{
@@ -245,6 +255,12 @@ public:
         }   while (temp != this->head); 
             cout << "Head\n";
     }
+
+    void self(){
+        cout << "CircularSingly\n";
+    }
+
+    
 };
 
 class CircularDoubly : public LinkedList{
@@ -317,6 +333,9 @@ public:
         }   while (temp != this->head); 
             cout << "Head\n";
     }
+    void self(){
+        cout << "CircularDoubly\n";
+    }
 };
 
 void display(LinkedList * obj){
@@ -327,9 +346,11 @@ void display(LinkedList * obj){
     obj->removeAtHead();
     obj->insertAtLast(2);
     obj->insertAtHead(0);
+    cout << "Displaying : ";
+    obj->self();
     obj->print();
     cout << "Length : " << obj->getLength();
-    cout << endl;
+    cout << endl << endl;
 }
 
 int main(){
