@@ -29,6 +29,7 @@ public:
     int getLength()             { return this->length; }
     bool isEmpty()              { return this->head == NULL; }
     bool isIndex(int index)     { return ( (index <= this->getLength()) && (index > 0) ); }
+
     Node * getNodeById(int id){
         if ((!isEmpty()) && (isIndex(id))){
             Node * temp = head;
@@ -174,6 +175,69 @@ public:
     }
 };
 
+class CircularSingly : public LinkedList{
+public:
+    void insertAtHead(int value){
+        Node * temp = new Node(value,this->head);
+        this->head = temp;
+        this->length++;
+    }
+    void insertAtLast(int value){
+        if (this->isEmpty()){
+            this->insertAtHead(value);
+            return;
+        }
+        else {
+            Node * temp = new Node(value);
+            Node * last = this->getNodeById(this->getLength()); // last node
+            last->setNext(temp);
+        }
+        this->length++;
+    }
+
+    void removeAtHead(){
+        if (!(this->isEmpty())){
+            if (this->getLength() == 1){
+                delete this->head;
+                this->head = NULL;
+            }
+            else {
+                Node * temp = this->head; // to delete
+                this->head = this->head->getNext();
+                delete temp;
+            }
+            this->length--;
+        }
+    }
+
+    void removeAtLast(){
+        if (!this->isEmpty()){
+            if (this->getLength() == 1){
+                this->removeAtHead();
+                return;
+            }
+            else {
+                Node * secLast = this->getNodeById(this->getLength() - 1); // second node
+                Node * last = secLast->getNext(); // last node
+                secLast->setNext(NULL);
+                delete last;
+                this->length--;
+            }
+        }
+    }
+
+    void print(){
+        Node * temp = this->head;
+        while (temp != NULL){
+            cout << temp->getData() << "->";
+            temp = temp->getNext();
+        }
+        cout << "Head\n";
+    }
+
+};
+
+
 int main(){
     LinkedList * l1 = new Singly;
     l1->insertAtLast(1);
@@ -194,6 +258,16 @@ int main(){
     l2->insertAtLast(2);
     l2->print();
     cout << "DLL Length : " << l2->getLength();
+    cout << endl;
+
+    LinkedList * l3 = new CircularSingly;
+    l3->insertAtLast(1);
+    l3->insertAtLast(2);
+    l3->insertAtHead(0);
+    l3->removeAtLast();
+    l3->removeAtHead();
+    l3->print();
+    cout << "CSLL Length : " << l3->getLength();
     cout << endl;
     return 0;
 }
