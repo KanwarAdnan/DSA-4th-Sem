@@ -238,12 +238,84 @@ public:
     }
 
     void print(){
-    Node * temp = this->head;
-    do{
-        cout << temp->getData() << "->"; 
-        temp = temp->getNext(); 
-    } while (temp != this->head); 
-    cout << "Head\n";
+        Node * temp = this->head;
+        do{
+            cout << temp->getData() << "->"; 
+            temp = temp->getNext(); 
+        }   while (temp != this->head); 
+            cout << "Head\n";
+    }
+};
+
+class CircularDoubly : public LinkedList{
+public:
+    void insertAtHead(int value){
+        Node * temp = new Node(value);
+        if (this->isEmpty()){
+            temp->setNext(temp);
+            this->head = temp;
+            this->length++;
+            return;
+        }
+        Node * last = this->getNodeById(this->getLength());
+        last->setNext(temp);
+        temp->setNext(this->head);
+        this->head = temp;
+        this->length++;
+    }
+    void insertAtLast(int value){
+        if (this->isEmpty()){
+            this->insertAtHead(value);
+            return;
+        }
+        else {
+            Node * last = this->getNodeById(this->getLength()); // last node
+            Node * temp = new Node(value); // new last
+            last->setNext(temp);
+            temp->setNext(this->head); 
+            this->length++;
+        }
+    }
+
+    void removeAtHead(){
+        if (!(this->isEmpty())){
+            if (this->getLength() == 1){
+                delete this->head;
+                this->head = NULL;
+            }
+            else {
+                Node * temp = this->head; // to delete
+                this->head = this->head->getNext();
+                delete temp;
+            }
+            this->length--;
+        }
+    }
+
+    void removeAtLast(){
+        if (!this->isEmpty()){
+            if (this->getLength() == 1){
+                this->removeAtHead();
+                return;
+            }
+            else {
+                Node * secLast = this->getNodeById(this->getLength() - 1); // second node
+                Node * last = secLast->getNext(); // last node
+                secLast->setNext(this->head);
+                delete last;
+                this->length--;
+            }
+        }
+    }
+
+    void print(){
+        Node * temp = this->head;
+        cout << "NULL->";
+        do{
+            cout << temp->getData() << "->"; 
+            temp = temp->getNext(); 
+        }   while (temp != this->head); 
+            cout << "Head\n";
     }
 };
 
@@ -264,7 +336,9 @@ int main(){
     LinkedList * l1 = new Singly;
     LinkedList * l2 = new Doubly;
     LinkedList * l3 = new CircularSingly;
+    LinkedList * l4 = new CircularDoubly;
     display(l1);
     display(l2);
     display(l3);
+    display(l4);
 }
