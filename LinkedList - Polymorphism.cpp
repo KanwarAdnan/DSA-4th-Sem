@@ -135,7 +135,23 @@ public:
         }
     }
     void removeAtLast(){
-        cout << "removeAtLast\n";
+        if (!this->isEmpty()){
+            if (this->getLength() == 1){
+                this->removeAtHead();
+            }
+            else {
+                Node * previous = NULL; // second last ptr
+                Node * current = this->head; // null ptr in the end
+                
+                while (current->getNext() != NULL){
+                    previous = current;
+                    current = current->getNext();
+                }
+                previous->setNext(NULL);
+                delete current;
+                this->length--;
+            }
+        }
     }
     void removeAtHead(){
         if (!this->isEmpty()){
@@ -165,14 +181,23 @@ public:
 };
 
 int main(){
-    LinkedList * l1 = new Doubly;
+    LinkedList * l1 = new Singly;
+    l1->insertAtLast(1);
     l1->insertAtLast(2);
-    l1->insertAtHead(1);
-    l1->insertAtHead(1);
-    l1->insertAtLast(2);
-    l1->removeAtHead();
+    l1->insertAtHead(0);
+    l1->removeAtLast();
     l1->removeAtHead();
     l1->print();
+    cout << "SLL Length : " << l1->getLength();
+    cout << endl;
+
+    LinkedList * l2 = new Doubly;
+    l2->insertAtLast(1);
+    l2->insertAtLast(2);
+    l2->insertAtHead(0);
+    l2->removeAtLast();
+    l2->removeAtHead();
+    l2->print();
     cout << "DLL Length : " << l1->getLength();
     cout << endl;
     return 0;
