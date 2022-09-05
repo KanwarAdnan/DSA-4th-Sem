@@ -30,16 +30,9 @@ public:
     bool isEmpty()              { return this->head == NULL; }
     virtual Node * getHead()    { return this->head; }
 
-    void print(){
-        Node * temp = this->head;
-        while (temp != NULL){
-            cout << temp->getData() << "->";
-            temp = temp->getNext();
-        }
-        cout << "NULL\n";
-    }
 
     // virtual functions
+    virtual void print() = 0;
     virtual void insertAtHead(int) = 0;
     virtual void insertAtLast(int) = 0;
     virtual void removeAtHead() = 0;
@@ -106,6 +99,15 @@ public:
             }
         }
     }
+
+    void print(){
+        Node * temp = this->head;
+        while (temp != NULL){
+            cout << temp->getData() << "->";
+            temp = temp->getNext();
+        }
+        cout << "NULL\n";
+    }
 };
 
 class Doubly : public LinkedList{
@@ -139,10 +141,20 @@ public:
         cout << "removeAtHead\n";
     }
 
+    void print(){
+        Node * temp = head;
+        cout << "NULL<->";
+        while (temp != NULL){
+            cout << temp->getData() << "<->";
+            temp = temp->getNext();
+        }
+        cout << "NULL\n";
+    }
 };
 
 int main(){
     LinkedList * l1 = new Doubly;
+    l1->insertAtLast(2);
     l1->insertAtHead(1);
     l1->insertAtHead(1);
     l1->insertAtLast(2);
