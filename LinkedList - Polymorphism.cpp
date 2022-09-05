@@ -29,7 +29,6 @@ public:
     int getLength()             { return this->length; }
     bool isEmpty()              { return this->head == NULL; }
     bool isIndex(int index)     { return ( (index <= this->getLength()) && (index > 0) ); }
-    
     Node * getNodeById(int id){
         if ((!isEmpty()) && (isIndex(id))){
             Node * temp = head;
@@ -192,8 +191,9 @@ int main(){
     l2->insertAtHead(0);
     l2->removeAtLast();
     l2->removeAtHead();
+    l2->insertAtLast(2);
     l2->print();
-    cout << "DLL Length : " << l1->getLength();
+    cout << "DLL Length : " << l2->getLength();
     cout << endl;
     return 0;
 }
