@@ -56,11 +56,11 @@ public:
     }
     
     void insertAtLast(int value){
-        Node * temp = new Node(value);
         if (this->isEmpty()){
-            this->head = temp;
+            this->insertAtHead(value);
         }
         else {
+            Node * temp = new Node(value);
             Node * previous = NULL; // Last ptr
             Node * current = this->head; // null pointer in the end
             while (current != NULL){
@@ -90,7 +90,7 @@ public:
     void removeAtLast(){
         if (!this->isEmpty()){
             if (this->getLength() == 1){
-                removeAtHead();
+                this->removeAtHead();
             }
             else {
                 Node * previous = NULL; // Last ptr
@@ -116,7 +116,21 @@ public:
         this->length++;
     }
     void insertAtLast(int value){
-        cout << "insertAtLast\n";
+        if (this->isEmpty()){
+            this->insertAtHead(value);
+        }
+        else {
+            Node * previous = NULL;
+            Node * current = this->head;
+            
+            while (current != NULL){
+                previous = current;
+                current = current->getNext();
+            }
+            Node * temp = new Node(value,NULL,previous);
+            previous->setNext(temp);
+            this->length++;
+        }
     }
     void removeAtLast(){
         cout << "removeAtLast\n";
@@ -131,6 +145,7 @@ int main(){
     LinkedList * l1 = new Doubly;
     l1->insertAtHead(1);
     l1->insertAtHead(1);
+    l1->insertAtLast(2);
     l1->print();
     cout << "DLL Length : " << l1->getLength();
     cout << endl;
