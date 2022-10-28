@@ -1,3 +1,9 @@
+# Linked Lists using Polymorphism
+# Singly LinkedList , Doubly LinkedList , Circular Singly LinkedList , Doubly Circular LinkedList
+# Methods : insertAtHead , insertAtLast , removeAtHead , removeAtLast , print , getNodeById , isEmpty , getLength , self , isIndex
+# Code : https://github.com/KanwarAdnan/DSA-4th-Sem/blob/main/LinkedList%20-%20Polymorphism.cpp
+# Program by Kanwar Adnan
+
 #include <iostream>
 using namespace std;
 
@@ -338,6 +344,86 @@ public:
     }
 };
 
+class Singly2 : public LinkedList{
+protected:
+    Node * last;
+public:
+
+    void insertAtHead(int x){
+        Node * temp = new Node(x);
+        temp->setNext(head);
+        last = head;
+        head = temp;
+        this->length++;
+    }
+
+    void insertAtLast(int x){
+        Node * n = new Node(x);
+        if (!isEmpty()){
+            Node * temp = head;
+            while( temp->getNext() != NULL){
+                temp = temp->getNext();
+            }
+            temp->setNext(n);
+            last = n;
+        }
+        else {
+            head = n;
+        }
+        this->length++;
+    }
+    
+    void removeAtHead(){
+        if (isEmpty()){
+            return;
+        }
+        else if (head->getNext() == NULL) {
+            delete head;
+            head = NULL;
+            this->length--;
+        }
+        else {
+            Node * temp = head->getNext();
+            delete head;
+            head = temp;
+            this->length--;
+        }
+    }
+
+    void removeAtLast(){
+        if (!this->isEmpty()){
+            if (this->getLength() == 1){
+                this->removeAtHead();
+                return;
+            }
+            else {
+                Node * secLast = this->getNodeById(this->getLength() - 1); // second node
+                Node * last = secLast->getNext(); // last node
+                secLast->setNext(NULL);
+                delete last;
+                this->last = secLast;
+                this->length--;
+            }
+        }
+    }
+
+
+    void print(){
+        if (!isEmpty()){
+            Node* temp = head;
+            while(temp != NULL){
+                cout << temp->getData() << "->";
+                temp = temp->getNext();
+            }
+        }
+        cout << "NULL\n";
+    }
+
+    void self(){
+        cout << "Singly LinkedList Variant\n";
+    }
+};
+
 void display(LinkedList * obj){
     obj->insertAtLast(1);
     obj->insertAtLast(2);
@@ -358,8 +444,52 @@ int main(){
     LinkedList * l2 = new Doubly;
     LinkedList * l3 = new CircularSingly;
     LinkedList * l4 = new CircularDoubly;
+    LinkedList * l5 = new Singly2;
     display(l1);
     display(l2);
     display(l3);
     display(l4);
+    display(l5);
 }
+
+/*
+
+Output:
+
+Displaying : Singly
+0->1->2->NULL
+Length : 3
+
+Displaying : Doubly
+NULL<->0<->1<->2<->NULL
+Length : 3
+
+Displaying : CircularSingly
+0->1->2->Head
+Length : 3
+
+Displaying : CircularDoubly
+NULL->0->1->2->Head
+Length : 3
+
+Displaying : Singly LinkedList Variant
+0->1->2->NULL
+Length : 3
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Customize display function according to your needs.
