@@ -1,8 +1,8 @@
-# Linked Lists using Polymorphism
-# Singly LinkedList , Doubly LinkedList , Circular Singly LinkedList , Doubly Circular LinkedList
-# Methods : insertAtHead , insertAtLast , removeAtHead , removeAtLast , print , getNodeById , isEmpty , getLength , self , isIndex
-# Code : https://github.com/KanwarAdnan/DSA-4th-Sem/blob/main/LinkedList%20-%20Polymorphism.cpp
-# Program by Kanwar Adnan
+// Linked Lists using Polymorphism
+// Singly LinkedList , Doubly LinkedList , Circular Singly LinkedList , Doubly Circular LinkedList
+// Methods : insertAtHead , insertAtLast , removeAtHead , removeAtLast , print , getNodeById , isEmpty , getLength , self , isIndex
+// Code : https://github.com/KanwarAdnan/DSA-4th-Sem/blob/main/LinkedList%20-%20Polymorphism.cpp
+// Program by Kanwar Adnan
 
 #include <iostream>
 using namespace std;
