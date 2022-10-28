@@ -2,446 +2,100 @@
 using namespace std;
 
 class Node{
-private:
+public:
     int data;
     Node * next;
-    Node * prev;
-public:
-    Node(int data = 0 , Node * next = NULL , Node * prev = NULL){
-        this->data = data;
-        this->next = next;
-        this->prev = prev;
+    Node() : data(0), next(NULL) {}
+
+    Node(int data, Node * next = NULL){
+        setData(data);
+        setNext(next);
     }
-    
-    void setData(int data)      { this->data = data; }
-    void setPrev(Node * prev)   { this->prev = prev; }
-    void setNext(Node * next)   { this->next = next; }
-    int getData()               { return this->data; }
-    Node * getPrev()            { return this->prev; }
     Node * getNext()            { return this->next; }
+    int getData()               { return this->data; }
+    void setNext(Node * next)   { this->next = next; }
+    void setData(int data)      { this->data = data; }
 };
 
 class LinkedList{
-protected:
-    Node * head = NULL;
-    int length = 0;
-public:
-    int getLength()             { return this->length; }
-    bool isEmpty()              { return this->head == NULL; }
-    bool isIndex(int index)     { return ( (index <= this->getLength()) && (index > 0) ); }
-
-    Node * getNodeById(int id){
-        if ((!isEmpty()) && (isIndex(id))){
-            Node * temp = head;
-            int count = 1;
-            while (count != id){
-                temp = temp->getNext();
-                count++;
-            }
-            return temp;
-        }
-        return NULL;
-    }
-
-
-    // virtual functions
-    virtual void print() = 0;
-    virtual void insertAtHead(int) = 0;
-    virtual void insertAtLast(int) = 0;
-    virtual void removeAtHead() = 0;
-    virtual void removeAtLast() = 0;
-    virtual void self() = 0;
-};
-
-class Singly : public LinkedList{
-public:
-    void insertAtHead(int value){
-        Node * temp = new Node(value,this->head);
-        this->head = temp;
-        this->length++;
-    }
-    
-    void insertAtLast(int value){
-        if (this->isEmpty()){
-            this->insertAtHead(value);
-            return;
-        }
-        else {
-            Node * temp = new Node(value);
-            Node * last = this->getNodeById(this->getLength()); // last node
-            last->setNext(temp);
-        }
-        this->length++;
-    }
-
-    void removeAtHead(){
-        if (!(this->isEmpty())){
-            if (this->getLength() == 1){
-                delete this->head;
-                this->head = NULL;
-            }
-            else {
-                Node * temp = this->head; // to delete
-                this->head = this->head->getNext();
-                delete temp;
-            }
-            this->length--;
-        }
-    }
-
-    void removeAtLast(){
-        if (!this->isEmpty()){
-            if (this->getLength() == 1){
-                this->removeAtHead();
-                return;
-            }
-            else {
-                Node * secLast = this->getNodeById(this->getLength() - 1); // second node
-                Node * last = secLast->getNext(); // last node
-                secLast->setNext(NULL);
-                delete last;
-                this->length--;
-            }
-        }
-    }
-
-    void print(){
-        Node * temp = this->head;
-        while (temp != NULL){
-            cout << temp->getData() << "->";
-            temp = temp->getNext();
-        }
-        cout << "NULL\n";
-    }
-    
-    void self(){
-        cout << "Singly\n";
-    }
-    
-};
-
-class Doubly : public LinkedList{
-public:
-    void insertAtHead(int value){
-        Node * temp = new Node(value,this->head);
-        this->head = temp;
-        this->length++;
-    }
-    void insertAtLast(int value){
-        if (this->isEmpty()){
-            this->insertAtHead(value);
-            return;
-        }
-        else {
-            Node * last = this->getNodeById(this->getLength());
-            Node * temp = new Node(value,NULL,last); // last will be previous of new last 
-            last->setNext(temp);
-            this->length++;
-        }
-    }
-    void removeAtLast(){
-        if (!this->isEmpty()){
-            if (this->getLength() == 1){
-                this->removeAtHead();
-                return;
-            }
-            else {
-                Node * secLast = this->getNodeById(this->getLength() - 1); // second last ptr
-                Node * last = secLast->getNext();
-                secLast->setNext(NULL);
-                delete last;
-                this->length--;
-            }
-        }
-    }
-    void removeAtHead(){
-        if (!this->isEmpty()){
-            if (this->getLength() == 1){
-                delete this->head;
-                this->head = NULL;
-            }
-            else {
-                Node * temp = this->head; // to delete
-                this->head = this->head->getNext();
-                delete temp;
-                this->head->setPrev(NULL);
-            }
-            this->length--;
-        }
-    }
-
-    void print(){
-        Node * temp = head;
-        cout << "NULL<->";
-        while (temp != NULL){
-            cout << temp->getData() << "<->";
-            temp = temp->getNext();
-        }
-        cout << "NULL\n";
-    }
-
-    void self(){
-        cout << "Doubly\n";
-    }
-    
-};
-
-class CircularSingly : public LinkedList{
-public:
-    void insertAtHead(int value){
-        Node * temp = new Node(value);
-        if (this->isEmpty()){
-            temp->setNext(temp);
-            this->head = temp;
-            this->length++;
-            return;
-        }
-        Node * last = this->getNodeById(this->getLength());
-        last->setNext(temp);
-        temp->setNext(this->head);
-        this->head = temp;
-        this->length++;
-    }
-    void insertAtLast(int value){
-        if (this->isEmpty()){
-            this->insertAtHead(value);
-            return;
-        }
-        else {
-            Node * last = this->getNodeById(this->getLength()); // last node
-            Node * temp = new Node(value); // new last
-            last->setNext(temp);
-            temp->setNext(this->head); 
-            this->length++;
-        }
-    }
-
-    void removeAtHead(){
-        if (!(this->isEmpty())){
-            if (this->getLength() == 1){
-                delete this->head;
-                this->head = NULL;
-            }
-            else {
-                Node * temp = this->head; // to delete
-                this->head = this->head->getNext();
-                delete temp;
-            }
-            this->length--;
-        }
-    }
-
-    void removeAtLast(){
-        if (!this->isEmpty()){
-            if (this->getLength() == 1){
-                this->removeAtHead();
-                return;
-            }
-            else {
-                Node * secLast = this->getNodeById(this->getLength() - 1); // second node
-                Node * last = secLast->getNext(); // last node
-                secLast->setNext(this->head);
-                delete last;
-                this->length--;
-            }
-        }
-    }
-
-    void print(){
-        Node * temp = this->head;
-        do{
-            cout << temp->getData() << "->"; 
-            temp = temp->getNext(); 
-        }   while (temp != this->head); 
-            cout << "Head\n";
-    }
-
-    void self(){
-        cout << "CircularSingly\n";
-    }
-
-    
-};
-
-class CircularDoubly : public LinkedList{
-public:
-    void insertAtHead(int value){
-        Node * temp = new Node(value);
-        if (this->isEmpty()){
-            temp->setNext(temp);
-            this->head = temp;
-            this->length++;
-            return;
-        }
-        Node * last = this->getNodeById(this->getLength());
-        last->setNext(temp);
-        temp->setNext(this->head);
-        this->head = temp;
-        this->length++;
-    }
-    void insertAtLast(int value){
-        if (this->isEmpty()){
-            this->insertAtHead(value);
-            return;
-        }
-        else {
-            Node * last = this->getNodeById(this->getLength()); // last node
-            Node * temp = new Node(value); // new last
-            last->setNext(temp);
-            temp->setNext(this->head); 
-            this->length++;
-        }
-    }
-
-    void removeAtHead(){
-        if (!(this->isEmpty())){
-            if (this->getLength() == 1){
-                delete this->head;
-                this->head = NULL;
-            }
-            else {
-                Node * temp = this->head; // to delete
-                this->head = this->head->getNext();
-                delete temp;
-            }
-            this->length--;
-        }
-    }
-
-    void removeAtLast(){
-        if (!this->isEmpty()){
-            if (this->getLength() == 1){
-                this->removeAtHead();
-                return;
-            }
-            else {
-                Node * secLast = this->getNodeById(this->getLength() - 1); // second node
-                Node * last = secLast->getNext(); // last node
-                secLast->setNext(this->head);
-                delete last;
-                this->length--;
-            }
-        }
-    }
-
-    void print(){
-        Node * temp = this->head;
-        cout << "NULL->";
-        do{
-            cout << temp->getData() << "->"; 
-            temp = temp->getNext(); 
-        }   while (temp != this->head); 
-            cout << "Head\n";
-    }
-    void self(){
-        cout << "CircularDoubly\n";
-    }
-};
-
-class Singly2 : public LinkedList{
-protected:
-    Node * last;
-public:
-
-    void insertAtHead(int x){
-        Node * temp = new Node(x);
-        temp->setNext(head);
-        last = head;
-        head = temp;
-        this->length++;
-    }
-
-    void insertAtLast(int x){
-        Node * n = new Node(x);
-        if (!isEmpty()){
-            Node * temp = head;
-            while( temp->getNext() != NULL){
-                temp = temp->getNext();
-            }
-            temp->setNext(n);
-            last = n;
-        }
-        else {
-            head = n;
-        }
-        this->length++;
-    }
-    
-    void removeAtHead(){
-        if (isEmpty()){
-            return;
-        }
-        else if (head->getNext() == NULL) {
-            delete head;
+    private:
+        Node * head;
+        Node * last;
+    public:
+        LinkedList(){
             head = NULL;
-            this->length--;
+            last = NULL;
         }
-        else {
-            Node * temp = head->getNext();
-            delete head;
-            head = temp;
-            this->length--;
+        Node* getFirst(){
+            return head;
         }
-    }
+        int getLength(){
+            int count = 0;
+            if (!isEmpty() ){
+                Node * temp = head;
+                while(temp != NULL){
+                    temp = temp->getNext();
+                    count++;
+                }
+            }
+            return count;
+        }
 
-    void removeAtLast(){
-        if (!this->isEmpty()){
-            if (this->getLength() == 1){
-                this->removeAtHead();
-                return;
+    
+        void insertAtBeginning(int x){
+            Node * temp = new Node(x);
+            temp->setNext(head);
+            last = head;
+            head = temp;
+        }
+
+        void insertAtLast(int x){
+            Node * n = new Node(x);
+            if (!isEmpty()){
+                Node * temp = head;
+                while( temp->getNext() != NULL){
+                    temp = temp->getNext();
+                }
+                temp->setNext(n);
+                last = n;
             }
             else {
-                Node * secLast = this->getNodeById(this->getLength() - 1); // second node
-                Node * last = secLast->getNext(); // last node
-                secLast->setNext(NULL);
-                delete last;
-                this->last = secLast;
-                this->length--;
+                head = n;
+            }
+            }
+        void removeFirst(){
+            if (isEmpty()){
+                return;
+            }
+            else if (head->getNext() == NULL) {
+                delete head;
+                head = NULL;
+            }
+            else {
+                Node * temp = head->getNext();
+                delete head;
+                head = temp;
             }
         }
-    }
 
-
-    void print(){
-        if (!isEmpty()){
-            Node* temp = head;
-            while(temp != NULL){
-                cout << temp->getData() << "->";
-                temp = temp->getNext();
+        void print(){
+            if (!isEmpty()){
+                Node* temp = head;
+                while(temp != NULL){
+                    cout << temp->getData() << "->";
+                    temp = temp->getNext();
+                }
             }
+            cout << "NULL";
         }
-        cout << "NULL\n";
-    }
-
-    void self(){
-        cout << "Singly LinkedList Variant\n";
-    }
+        bool isEmpty()              { return (head == NULL); }    
 };
-
-void display(LinkedList * obj){
-    obj->insertAtLast(1);
-    obj->insertAtLast(2);
-    obj->insertAtHead(0);
-    obj->removeAtLast();
-    obj->removeAtHead();
-    obj->insertAtLast(2);
-    obj->insertAtHead(0);
-    cout << "Displaying : ";
-    obj->self();
-    obj->print();
-    cout << "Length : " << obj->getLength();
-    cout << endl << endl;
-}
 
 int main(){
-    LinkedList * l1 = new Singly;
-    LinkedList * l2 = new Doubly;
-    LinkedList * l3 = new CircularSingly;
-    LinkedList * l4 = new CircularDoubly;
-    LinkedList * l5 = new Singly2;
-    display(l1);
-    display(l2);
-    display(l3);
-    display(l4);
-    display(l5);
+    LinkedList l1;
+    l1.insertAtLast(1);
+    l1.insertAtLast(2);
+    l1.insertAtBeginning(0);
+    l1.print();
+    
 }
